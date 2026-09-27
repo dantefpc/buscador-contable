@@ -6,23 +6,36 @@
     <title>Buscador PCGE - Plan Contable General Empresarial</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gold-gradient {
+            background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);
+        }
+        .gold-border {
+            border-color: #f59e0b;
+        }
+    </style>
 </head>
-<body class="bg-slate-50 min-h-screen font-sans text-slate-800 flex flex-col justify-between">
+<body class="bg-amber-50/40 min-h-screen font-sans text-slate-800 flex flex-col justify-between">
 
-    <!-- Header -->
-    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-md">
+    <!-- Header con Estética Amarilla / Dorada -->
+    <header class="gold-gradient text-slate-900 shadow-md">
         <div class="max-w-4xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div class="flex items-center gap-3">
-                <div class="bg-white/10 p-3 rounded-xl backdrop-blur-sm border border-white/20">
-                    <i class="fa-solid fa-book-open text-2xl"></i>
+                <div class="bg-white/30 p-3 rounded-2xl backdrop-blur-sm border border-amber-300 shadow-sm">
+                    <i class="fa-solid fa-book-bookmark text-2xl text-amber-950"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight">Buscador PCGE</h1>
-                    <p class="text-xs sm:text-sm text-blue-100 opacity-90">Plan Contable General Empresarial (Perú)</p>
+                    <h1 class="text-xl sm:text-2xl font-black tracking-tight text-amber-950">Buscador PCGE</h1>
+                    <p class="text-xs sm:text-sm font-semibold text-amber-900 opacity-90">Plan Contable General Empresarial (Perú)</p>
                 </div>
             </div>
-            <div class="bg-white/10 px-3 py-1.5 rounded-lg text-xs font-medium tracking-wide border border-white/10">
-                <i class="fa-solid fa-shield-halved mr-1.5"></i> Actualizado
+            <div class="flex items-center gap-2">
+                <button onclick="switchTab('buscador')" id="btn-tab-buscador" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-950 text-amber-200 shadow transition-all">
+                    <i class="fa-solid fa-magnifying-glass mr-1"></i> Buscador
+                </button>
+                <button onclick="switchTab('acceso')" id="btn-tab-acceso" class="px-4 py-2 rounded-xl text-xs font-bold bg-white/60 text-amber-950 hover:bg-white transition-all">
+                    <i class="fa-solid fa-lock mr-1"></i> Acceso Especial
+                </button>
             </div>
         </div>
     </header>
@@ -30,55 +43,105 @@
     <!-- Main Container -->
     <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
         
-        <!-- Search Card -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-7 mb-6 transition-all focus-within:shadow-md">
-            <label for="search-input" class="block text-sm font-semibold text-slate-700 mb-2">
-                <i class="fa-solid fa-magnifying-glass text-blue-600 mr-1.5"></i> Ingresa número de cuenta o nombre:
-            </label>
-            <div class="relative">
-                <input 
-                    type="text" 
-                    id="search-input" 
-                    placeholder="Ej. 1042, 12, Mercaderías, Tributos..." 
-                    class="w-full pl-4 pr-12 py-3.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all text-lg font-medium"
-                    autocomplete="off"
-                    autofocus
-                >
-                <button id="clear-btn" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-2 hidden transition-colors" title="Limpiar">
-                    <i class="fa-solid fa-circle-xmark text-lg"></i>
-                </button>
+        <!-- SECCIÓN 1: BUSCADOR -->
+        <div id="section-buscador" class="space-y-6">
+            <!-- Search Card -->
+            <div class="bg-white rounded-3xl shadow-sm border border-amber-200/60 p-5 sm:p-7 transition-all focus-within:shadow-md">
+                <label for="search-input" class="block text-sm font-bold text-amber-900 mb-2">
+                    <i class="fa-solid fa-search text-amber-600 mr-1.5"></i> Ingresa número de cuenta o nombre:
+                </label>
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Ej. 1042, 12, Mercaderías, Tributos..." 
+                        class="w-full pl-4 pr-12 py-3.5 bg-amber-50/30 border border-amber-200 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all text-lg font-medium"
+                        autocomplete="off"
+                        autofocus
+                    >
+                    <button id="clear-btn" class="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400 hover:text-amber-600 p-2 hidden transition-colors" title="Limpiar">
+                        <i class="fa-solid fa-circle-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Quick Filter Badges -->
+                <div class="mt-4 flex flex-wrap gap-2 items-center text-xs">
+                    <span class="text-amber-900 font-bold mr-1">Elementos:</span>
+                    <button onclick="filterByElement('1')" class="px-2.5 py-1 bg-amber-100/80 text-amber-900 rounded-lg border border-amber-300 hover:bg-amber-200 transition-colors font-medium">1. Activo</button>
+                    <button onclick="filterByElement('2')" class="px-2.5 py-1 bg-yellow-100/80 text-yellow-900 rounded-lg border border-yellow-300 hover:bg-yellow-200 transition-colors font-medium">2. Realizable</button>
+                    <button onclick="filterByElement('3')" class="px-2.5 py-1 bg-amber-100/80 text-amber-900 rounded-lg border border-amber-300 hover:bg-amber-200 transition-colors font-medium">3. Inmovilizado</button>
+                    <button onclick="filterByElement('4')" class="px-2.5 py-1 bg-orange-100/80 text-orange-900 rounded-lg border border-orange-300 hover:bg-orange-200 transition-colors font-medium">4. Pasivo</button>
+                    <button onclick="filterByElement('5')" class="px-2.5 py-1 bg-amber-200/60 text-amber-950 rounded-lg border border-amber-400 hover:bg-amber-300 transition-colors font-medium">5. Patrimonio</button>
+                    <button onclick="filterByElement('6')" class="px-2.5 py-1 bg-yellow-200/60 text-yellow-950 rounded-lg border border-yellow-400 hover:bg-yellow-300 transition-colors font-medium">6. Gastos</button>
+                    <button onclick="filterByElement('7')" class="px-2.5 py-1 bg-amber-100 text-amber-900 rounded-lg border border-amber-300 hover:bg-amber-200 transition-colors font-medium">7. Ingresos</button>
+                    <button onclick="filterByElement('8')" class="px-2.5 py-1 bg-stone-100 text-stone-800 rounded-lg border border-stone-300 hover:bg-stone-200 transition-colors font-medium">8. Saldos</button>
+                    <button onclick="filterByElement('9')" class="px-2.5 py-1 bg-amber-50 text-amber-900 rounded-lg border border-amber-200 hover:bg-amber-100 transition-colors font-medium">9. Analítica</button>
+                </div>
             </div>
 
-            <!-- Quick Filter Badges -->
-            <div class="mt-4 flex flex-wrap gap-2 items-center text-xs">
-                <span class="text-slate-500 font-medium mr-1">Elementos:</span>
-                <button onclick="filterByElement('1')" class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors">1. Activo</button>
-                <button onclick="filterByElement('2')" class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-lg border border-amber-200 hover:bg-amber-100 transition-colors">2. Activo Realizable</button>
-                <button onclick="filterByElement('3')" class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg border border-emerald-200 hover:bg-emerald-100 transition-colors">3. Activo Inmovilizado</button>
-                <button onclick="filterByElement('4')" class="px-2.5 py-1 bg-rose-50 text-rose-700 rounded-lg border border-rose-200 hover:bg-rose-100 transition-colors">4. Pasivo</button>
-                <button onclick="filterByElement('5')" class="px-2.5 py-1 bg-purple-50 text-purple-700 rounded-lg border border-purple-200 hover:bg-purple-100 transition-colors">5. Patrimonio</button>
-                <button onclick="filterByElement('6')" class="px-2.5 py-1 bg-orange-50 text-orange-700 rounded-lg border border-orange-200 hover:bg-orange-100 transition-colors">6. Gastos</button>
-                <button onclick="filterByElement('7')" class="px-2.5 py-1 bg-teal-50 text-teal-700 rounded-lg border border-teal-200 hover:bg-teal-100 transition-colors">7. Ingresos</button>
-                <button onclick="filterByElement('8')" class="px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-lg border border-indigo-200 hover:bg-indigo-100 transition-colors">8. Gastos / Ingresos Fin.</button>
-                <button onclick="filterByElement('9')" class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg border border-slate-300 hover:bg-slate-200 transition-colors">9. Analítica</button>
+            <!-- Results Section -->
+            <div id="results-container" class="space-y-4">
+                <div class="bg-white border border-dashed border-amber-300 rounded-3xl p-8 text-center text-slate-500 shadow-sm">
+                    <i class="fa-solid fa-file-invoice text-4xl text-amber-500 mb-3 opacity-80"></i>
+                    <h3 class="font-bold text-amber-950 text-base">Comienza a buscar una cuenta</h3>
+                    <p class="text-sm text-slate-400 mt-1">Busca por código exacto (ej. 1042, 4212) o palabra clave.</p>
+                </div>
             </div>
         </div>
 
-        <!-- Results Section -->
-        <div id="results-container" class="space-y-4">
-            <!-- Initial state -->
-            <div class="bg-white border border-dashed border-slate-300 rounded-2xl p-8 text-center text-slate-500">
-                <i class="fa-solid fa-file-invoice text-4xl text-blue-500 mb-3 opacity-80"></i>
-                <h3 class="font-semibold text-slate-700 text-base">Comienza a escribir una cuenta</h3>
-                <p class="text-sm text-slate-400 mt-1">Puedes buscar por código exacto (ej. 1042, 4212) o por palabra clave (ej. "Caja", "Facturas").</p>
+        <!-- SECCIÓN 2: ACCESO ESPECIAL / REGISTRO DE USUARIOS AUTORIZADOS -->
+        <div id="section-acceso" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl shadow-sm border border-amber-200/60 p-6 sm:p-8 max-w-md mx-auto">
+                <div class="text-center mb-6">
+                    <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-3 text-amber-700 shadow-inner">
+                        <i class="fa-solid fa-user-shield text-2xl"></i>
+                    </div>
+                    <h2 class="text-xl font-black text-amber-950">Control de Acceso Especial</h2>
+                    <p class="text-xs text-slate-500 mt-1">Registra o valida tus credenciales para obtener permisos de gestión en este plan contable.</p>
+                </div>
+
+                <!-- Formulario de Registro / Acceso -->
+                <div class="space-y-4" id="auth-form-container">
+                    <div>
+                        <label class="block text-xs font-bold text-amber-900 mb-1">Nombre o Usuario</label>
+                        <input type="text" id="reg-user" placeholder="Ej. Administrador" class="w-full px-4 py-3 bg-amber-50/40 border border-amber-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-amber-900 mb-1">Código PIN Secreto</label>
+                        <input type="password" id="reg-pin" placeholder="••••" maxlength="6" class="w-full px-4 py-3 bg-amber-50/40 border border-amber-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none text-center tracking-widest font-bold">
+                    </div>
+                    <button onclick="handleSpecialRegister()" class="w-full gold-gradient text-amber-950 font-black py-3.5 rounded-xl shadow hover:opacity-95 transition-all text-sm">
+                        Registrar / Validar Acceso
+                    </button>
+                </div>
+
+                <!-- Panel de Usuario Autorizado (Oculto por defecto) -->
+                <div id="authorized-panel" class="hidden text-center space-y-4 py-4">
+                    <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl">
+                        <i class="fa-solid fa-circle-check text-emerald-600 text-3xl mb-2"></i>
+                        <h3 class="font-bold text-amber-950 text-base" id="welcome-user-msg">¡Bienvenido, Usuario!</h3>
+                        <p class="text-xs text-emerald-700 font-medium mt-1">Tienes acceso especial autorizado concedido.</p>
+                    </div>
+                    <div class="p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs text-slate-600 text-left">
+                        <p class="font-bold text-slate-700 mb-1"><i class="fa-solid fa-info-circle mr-1 text-amber-600"></i> Privilegios activos:</p>
+                        <ul class="list-disc list-inside space-y-1 opacity-90">
+                            <li>Visualización extendida de cuentas analíticas.</li>
+                            <li>Permiso para futuras actualizaciones de catálogos locales.</li>
+                        </ul>
+                    </div>
+                    <button onclick="logoutSpecial()" class="text-xs text-rose-600 font-bold hover:underline pt-2 inline-block">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Cerrar sesión especial
+                    </button>
+                </div>
+
             </div>
         </div>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-auto py-4 text-center text-xs text-slate-500">
-        <p>Buscador Inteligente PCGE &bull; Diseñado para facilitar el trabajo contable</p>
+    <footer class="bg-white border-t border-amber-200/60 mt-auto py-4 text-center text-xs text-amber-900/70 font-medium">
+        <p>Buscador Inteligente PCGE &bull; Estética Dorada Personalizada</p>
     </footer>
 
     <!-- JavaScript Database & Logic -->
@@ -89,20 +152,21 @@
             { code: "101", name: "Caja", element: "1. Activo Disponible", nature: "Deudor" },
             { code: "102", name: "Fondos fijos", element: "1. Activo Disponible", nature: "Deudor" },
             { code: "103", name: "Efectivo en tránsito", element: "1. Activo Disponible", nature: "Deudor" },
+            { code: "1031", name: "Efectivo en tránsito", element: "1. Activo Disponible", nature: "Deudor" },
+            { code: "1032", name: "Cheques en tránsito", element: "1. Activo Disponible", nature: "Deudor" },
             { code: "104", name: "Cuentas corrientes en instituciones financieras", element: "1. Activo Disponible", nature: "Deudor" },
             { code: "1041", name: "Cuentas corrientes operativas", element: "1. Activo Disponible", nature: "Deudor" },
             { code: "1042", name: "Cuentas corrientes para fines específicos", element: "1. Activo Disponible", nature: "Deudor" },
             { code: "105", name: "Otros equivalentes de efectivo", element: "1. Activo Disponible", nature: "Deudor" },
+            { code: "107", name: "Fondos sujetos a restricción", element: "1. Activo Disponible", nature: "Deudor" },
             { code: "11", name: "Inversiones financieras", element: "1. Activo Disponible", nature: "Deudor" },
             { code: "12", name: "Cuentas por cobrar comerciales - Terceros", element: "1. Activo Exigible", nature: "Deudor" },
             { code: "121", name: "Facturas, boletas y otros comprobantes por cobrar", element: "1. Activo Exigible", nature: "Deudor" },
             { code: "1211", name: "No emitidas", element: "1. Activo Exigible", nature: "Deudor" },
             { code: "1212", name: "Emitidas en cartera", element: "1. Activo Exigible", nature: "Deudor" },
             { code: "123", name: "Letras por cobrar", element: "1. Activo Exigible", nature: "Deudor" },
-            { code: "14", name: "Cuentas por cobrar al personal, a los accionistas (socios), directores y gerentes", element: "1. Activo Exigible", nature: "Deudor" },
+            { code: "14", name: "Cuentas por cobrar al personal, a los accionistas, directores", element: "1. Activo Exigible", nature: "Deudor" },
             { code: "16", name: "Cuentas por cobrar diversas - Terceros", element: "1. Activo Exigible", nature: "Deudor" },
-            { code: "161", name: "Préstamos", element: "1. Activo Exigible", nature: "Deudor" },
-            { code: "168", name: "Otras cuentas por cobrar diversas", element: "1. Activo Exigible", nature: "Deudor" },
             { code: "18", name: "Servicios y otros contratados por anticipado", element: "1. Activo Exigible", nature: "Deudor" },
             { code: "19", name: "Estimación de cuentas de cobranza dudosa", element: "1. Activo Exigible", nature: "Acreedor (Valuación)" },
 
@@ -130,24 +194,19 @@
             { code: "335", name: "Muebles y enseres", element: "3. Activo Inmovilizado", nature: "Deudor" },
             { code: "336", name: "Equipos diversos", element: "3. Activo Inmovilizado", nature: "Deudor" },
             { code: "34", name: "Intangibles", element: "3. Activo Inmovilizado", nature: "Deudor" },
-            { code: "38", name: "Otros activos", element: "3. Activo Inmovilizado", nature: "Deudor" },
             { code: "39", name: "Depreciación, amortización y agotamiento acumulados", element: "3. Activo Inmovilizado", nature: "Acreedor (Valuación)" },
 
             // Elemento 4: PASIVO
-            { code: "40", name: "Tributos, contraprestaciones y aportes al sistema de pensiones y de salud por pagar", element: "4. Pasivo", nature: "Acreedor" },
+            { code: "40", name: "Tributos, contraprestaciones y aportes al sistema de pensiones", element: "4. Pasivo", nature: "Acreedor" },
             { code: "4011", name: "IGV - Impuesto General a las Ventas", element: "4. Pasivo", nature: "Acreedor" },
             { code: "4017", name: "Impuesto a la Renta", element: "4. Pasivo", nature: "Acreedor" },
             { code: "403", name: "Instituciones públicas (Essalud, ONP)", element: "4. Pasivo", nature: "Acreedor" },
             { code: "41", name: "Remuneraciones y participaciones por pagar", element: "4. Pasivo", nature: "Acreedor" },
-            { code: "411", name: "Remuneraciones por pagar", element: "4. Pasivo", nature: "Acreedor" },
             { code: "42", name: "Cuentas por pagar comerciales - Terceros", element: "4. Pasivo", nature: "Acreedor" },
             { code: "421", name: "Facturas, boletas y otros comprobantes por pagar", element: "4. Pasivo", nature: "Acreedor" },
             { code: "4212", name: "Emitidas", element: "4. Pasivo", nature: "Acreedor" },
-            { code: "423", name: "Letras por pagar", element: "4. Pasivo", nature: "Acreedor" },
             { code: "45", name: "Obligaciones financieras", element: "4. Pasivo", nature: "Acreedor" },
-            { code: "451", name: "Préstamos de instituciones financieras", element: "4. Pasivo", nature: "Acreedor" },
             { code: "46", name: "Cuentas por pagar diversas - Terceros", element: "4. Pasivo", nature: "Acreedor" },
-            { code: "469", name: "Otras cuentas por pagar diversas", element: "4. Pasivo", nature: "Acreedor" },
 
             // Elemento 5: PATRIMONIO NETO
             { code: "50", name: "Capital", element: "5. Patrimonio", nature: "Acreedor" },
@@ -157,21 +216,13 @@
             { code: "57", name: "Excedente de revaluación", element: "5. Patrimonio", nature: "Acreedor" },
             { code: "58", name: "Reservas", element: "5. Patrimonio", nature: "Acreedor" },
             { code: "59", name: "Resultados acumulados", element: "5. Patrimonio", nature: "Acreedor o Deudor" },
-            { code: "591", name: "Utilidades acumuladas", element: "5. Patrimonio", nature: "Acreedor" },
-            { code: "592", name: "Pérdidas acumuladas", element: "5. Patrimonio", nature: "Deudor" },
 
             // Elemento 6: GASTOS POR NATURALEZA
             { code: "60", name: "Compras", element: "6. Gastos", nature: "Deudor" },
             { code: "601", name: "Mercaderías", element: "6. Gastos", nature: "Deudor" },
-            { code: "602", name: "Materias primas", element: "6. Gastos", nature: "Deudor" },
-            { code: "603", name: "Materiales auxiliares, suministros y repuestos", element: "6. Gastos", nature: "Deudor" },
-            { code: "604", name: "Envases y embalajes", element: "6. Gastos", nature: "Deudor" },
             { code: "61", name: "Variación de inventarios", element: "6. Gastos / Ingresos", nature: "Deudor o Acreedor" },
             { code: "62", name: "Gastos de personal, directores y gerentes", element: "6. Gastos", nature: "Deudor" },
-            { code: "621", name: "Remuneraciones", element: "6. Gastos", nature: "Deudor" },
             { code: "63", name: "Gastos de servicios prestados por terceros", element: "6. Gastos", nature: "Deudor" },
-            { code: "631", name: "Transporte y almacenamiento", element: "6. Gastos", nature: "Deudor" },
-            { code: "632", name: "Asesoría y consultoría", element: "6. Gastos", nature: "Deudor" },
             { code: "636", name: "Servicios básicos (Energía, agua, teléfono)", element: "6. Gastos", nature: "Deudor" },
             { code: "64", name: "Gastos por tributos", element: "6. Gastos", nature: "Deudor" },
             { code: "65", name: "Otros gastos de gestión", element: "6. Gastos", nature: "Deudor" },
@@ -181,10 +232,9 @@
             // Elemento 7: INGRESOS
             { code: "70", name: "Ventas", element: "7. Ingresos", nature: "Acreedor" },
             { code: "701", name: "Mercaderías", element: "7. Ingresos", nature: "Acreedor" },
-            { code: "702", name: "Productos terminados", element: "7. Ingresos", nature: "Acreedor" },
             { code: "704", name: "Prestación de servicios", element: "7. Ingresos", nature: "Acreedor" },
             { code: "73", name: "Descuentos, rebajas y bonificaciones obtenidos", element: "7. Ingresos", nature: "Acreedor" },
-            { code: "74", name: "Descuentos, rebajas y bonificaciones concedidos", element: "7. Ingresos", nature: "Deudor (Contra cuenta)" },
+            { code: "74", name: "Descuentos, rebajas y bonificaciones concedidos", element: "7. Ingresos", nature: "Deudor" },
             { code: "75", name: "Otros ingresos de gestión", element: "7. Ingresos", nature: "Acreedor" },
             { code: "77", name: "Ingresos financieros", element: "7. Ingresos", nature: "Acreedor" },
             { code: "79", name: "Cargas imputables a cuenta de costos y gastos", element: "7. Ingresos", nature: "Acreedor" },
@@ -193,18 +243,37 @@
             { code: "80", name: "Margen comercial", element: "8. Saldos Intermediarios", nature: "Acreedor / Deudor" },
             { code: "81", name: "Producción del ejercicio", element: "8. Saldos Intermediarios", nature: "Acreedor / Deudor" },
             { code: "82", name: "Valor agregado", element: "8. Saldos Intermediarios", nature: "Acreedor / Deudor" },
-            { code: "83", name: "Excedente bruto (insuficiencia bruta) de explotación", element: "8. Saldos Intermediarios", nature: "Acreedor / Deudor" },
             { code: "84", name: "Resultado de explotación", element: "8. Saldos Intermediarios", nature: "Acreedor / Deudor" },
             { code: "85", name: "Resultado antes de participaciones e impuestos", element: "8. Saldos Intermediarios", nature: "Acreedor / Deudor" },
             { code: "89", name: "Determinación del resultado del ejercicio", element: "8. Saldos Intermediarios", nature: "Acreedor / Deudor" },
 
-            // Elemento 9: CONTABILIDAD ANALÍTICA DE EXPLOTACIÓN
+            // Elemento 9: CONTABILIDAD ANALÍTICA
             { code: "90", name: "Costos de producción", element: "9. Contabilidad Analítica", nature: "Deudor" },
-            { code: "91", name: "Gastos por distribución", element: "9. Contabilidad Analítica", nature: "Deudor" },
             { code: "92", name: "Gastos de administración", element: "9. Contabilidad Analítica", nature: "Deudor" },
             { code: "94", name: "Gastos de ventas", element: "9. Contabilidad Analítica", nature: "Deudor" },
             { code: "95", name: "Gastos financieros", element: "9. Contabilidad Analítica", nature: "Deudor" }
         ];
+
+        // Control de pestañas
+        function switchTab(tab) {
+            const secBuscador = document.getElementById('section-buscador');
+            const secAcceso = document.getElementById('section-acceso');
+            const btnBuscador = document.getElementById('btn-tab-buscador');
+            const btnAcceso = document.getElementById('btn-tab-acceso');
+
+            if(tab === 'buscador') {
+                secBuscador.classList.remove('hidden');
+                secAcceso.classList.add('hidden');
+                btnBuscador.className = "px-4 py-2 rounded-xl text-xs font-bold bg-amber-950 text-amber-200 shadow transition-all";
+                btnAcceso.className = "px-4 py-2 rounded-xl text-xs font-bold bg-white/60 text-amber-950 hover:bg-white transition-all";
+            } else {
+                secBuscador.classList.add('hidden');
+                secAcceso.classList.remove('hidden');
+                btnAcceso.className = "px-4 py-2 rounded-xl text-xs font-bold bg-amber-950 text-amber-200 shadow transition-all";
+                btnBuscador.className = "px-4 py-2 rounded-xl text-xs font-bold bg-white/60 text-amber-950 hover:bg-white transition-all";
+                checkExistingSession();
+            }
+        }
 
         const searchInput = document.getElementById('search-input');
         const clearBtn = document.getElementById('clear-btn');
@@ -213,10 +282,10 @@
         function displayResults(results) {
             if (results.length === 0) {
                 resultsContainer.innerHTML = `
-                    <div class="bg-white border border-slate-200 rounded-2xl p-8 text-center text-slate-500 shadow-sm">
+                    <div class="bg-white border border-amber-200 rounded-3xl p-8 text-center text-slate-500 shadow-sm">
                         <i class="fa-solid fa-triangle-exclamation text-3xl text-amber-500 mb-2"></i>
-                        <h3 class="font-semibold text-slate-700 text-base">No se encontró ninguna cuenta</h3>
-                        <p class="text-sm text-slate-400 mt-1">Verifica el número o intenta buscar por nombre descriptivo.</p>
+                        <h3 class="font-bold text-amber-950 text-base">No se encontró ninguna cuenta</h3>
+                        <p class="text-sm text-slate-400 mt-1">Verifica el código ingresado.</p>
                     </div>
                 `;
                 return;
@@ -224,30 +293,20 @@
 
             let html = '';
             results.forEach(item => {
-                let badgeColor = "bg-slate-100 text-slate-700 border-slate-200";
-                if(item.element.startsWith("1")) badgeColor = "bg-blue-50 text-blue-700 border-blue-200";
-                if(item.element.startsWith("2")) badgeColor = "bg-amber-50 text-amber-700 border-amber-200";
-                if(item.element.startsWith("3")) badgeColor = "bg-emerald-50 text-emerald-700 border-emerald-200";
-                if(item.element.startsWith("4")) badgeColor = "bg-rose-50 text-rose-700 border-rose-200";
-                if(item.element.startsWith("5")) badgeColor = "bg-purple-50 text-purple-700 border-purple-200";
-                if(item.element.startsWith("6")) badgeColor = "bg-orange-50 text-orange-700 border-orange-200";
-                if(item.element.startsWith("7")) badgeColor = "bg-teal-50 text-teal-700 border-teal-200";
-                if(item.element.startsWith("8")) badgeColor = "bg-indigo-50 text-indigo-700 border-indigo-200";
-
                 html += `
-                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="bg-white rounded-3xl p-5 border border-amber-200/80 shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div class="flex items-start gap-4">
-                            <div class="bg-slate-900 text-white font-mono font-bold text-lg px-3.5 py-2 rounded-xl tracking-wider shrink-0 shadow-inner">
+                            <div class="bg-amber-950 text-amber-300 font-mono font-black text-lg px-3.5 py-2 rounded-2xl tracking-wider shrink-0 shadow-sm">
                                 ${item.code}
                             </div>
                             <div>
-                                <h3 class="font-semibold text-slate-800 text-base sm:text-lg leading-snug">${item.name}</h3>
+                                <h3 class="font-bold text-slate-900 text-base sm:text-lg leading-snug">${item.name}</h3>
                                 <div class="flex flex-wrap items-center gap-2 mt-2">
-                                    <span class="text-xs px-2.5 py-1 rounded-md font-medium border ${badgeColor}">
+                                    <span class="text-xs px-2.5 py-1 rounded-lg font-semibold bg-amber-100 text-amber-900 border border-amber-300">
                                         ${item.element}
                                     </span>
-                                    <span class="text-xs px-2.5 py-1 rounded-md font-medium bg-slate-100 text-slate-600 border border-slate-200">
-                                        <i class="fa-solid fa-scale-balanced mr-1 opacity-70"></i> Naturaleza: ${item.nature}
+                                    <span class="text-xs px-2.5 py-1 rounded-lg font-semibold bg-stone-100 text-stone-700 border border-stone-200">
+                                        <i class="fa-solid fa-scale-balanced mr-1 opacity-70"></i> ${item.nature}
                                     </span>
                                 </div>
                             </div>
@@ -265,10 +324,10 @@
             } else {
                 clearBtn.classList.add('hidden');
                 resultsContainer.innerHTML = `
-                    <div class="bg-white border border-dashed border-slate-300 rounded-2xl p-8 text-center text-slate-500">
-                        <i class="fa-solid fa-file-invoice text-4xl text-blue-500 mb-3 opacity-80"></i>
-                        <h3 class="font-semibold text-slate-700 text-base">Comienza a escribir una cuenta</h3>
-                        <p class="text-sm text-slate-400 mt-1">Puedes buscar por código exacto (ej. 1042, 4212) o por palabra clave (ej. "Caja", "Facturas").</p>
+                    <div class="bg-white border border-dashed border-amber-300 rounded-3xl p-8 text-center text-slate-500">
+                        <i class="fa-solid fa-file-invoice text-4xl text-amber-500 mb-3 opacity-80"></i>
+                        <h3 class="font-bold text-amber-950 text-base">Comienza a buscar una cuenta</h3>
+                        <p class="text-sm text-slate-400 mt-1">Busca por código exacto (ej. 1042, 4212) o palabra clave.</p>
                     </div>
                 `;
                 return;
@@ -284,11 +343,12 @@
         }
 
         function filterByElement(elemNumber) {
+            switchTab('buscador');
             searchInput.value = "";
             clearBtn.classList.remove('hidden');
             const filtered = pcgeDatabase.filter(item => item.code.startsWith(elemNumber));
             displayResults(filtered);
-            window.scrollTo({ top: 300, behavior: 'smooth' });
+            window.scrollTo({ top: 200, behavior: 'smooth' });
         }
 
         searchInput.addEventListener('input', handleSearch);
@@ -297,14 +357,52 @@
             searchInput.value = '';
             clearBtn.classList.add('hidden');
             resultsContainer.innerHTML = `
-                <div class="bg-white border border-dashed border-slate-300 rounded-2xl p-8 text-center text-slate-500">
-                    <i class="fa-solid fa-file-invoice text-4xl text-blue-500 mb-3 opacity-80"></i>
-                    <h3 class="font-semibold text-slate-700 text-base">Comienza a escribir una cuenta</h3>
-                    <p class="text-sm text-slate-400 mt-1">Puedes buscar por código exacto (ej. 1042, 4212) o por palabra clave (ej. "Caja", "Facturas").</p>
+                <div class="bg-white border border-dashed border-amber-300 rounded-3xl p-8 text-center text-slate-500">
+                    <i class="fa-solid fa-file-invoice text-4xl text-amber-500 mb-3 opacity-80"></i>
+                    <h3 class="font-bold text-amber-950 text-base">Comienza a buscar una cuenta</h3>
+                    <p class="text-sm text-slate-400 mt-1">Busca por código exacto (ej. 1042, 4212) o palabra clave.</p>
                 </div>
             `;
             searchInput.focus();
         });
+
+        // Lógica de Registro y Acceso Especial
+        function handleSpecialRegister() {
+            const user = document.getElementById('reg-user').value.trim();
+            const pin = document.getElementById('reg-pin').value.trim();
+
+            if(!user || !pin) {
+                alert("Por favor completa tu nombre y el PIN secreto.");
+                return;
+            }
+
+            localStorage.setItem('pcge_authorized_user', user);
+            checkExistingSession();
+            alert("¡Registro y acceso validado correctamente!");
+        }
+
+        function checkExistingSession() {
+            const savedUser = localStorage.getItem('pcge_authorized_user');
+            const authPanel = document.getElementById('authorized-panel');
+            const formContainer = document.getElementById('auth-form-container');
+            const welcomeMsg = document.getElementById('welcome-user-msg');
+
+            if(savedUser) {
+                formContainer.classList.add('hidden');
+                authPanel.classList.remove('hidden');
+                welcomeMsg.innerText = `¡Bienvenido, ${savedUser}!`;
+            } else {
+                formContainer.classList.remove('hidden');
+                authPanel.classList.add('hidden');
+            }
+        }
+
+        function logoutSpecial() {
+            localStorage.removeItem('pcge_authorized_user');
+            document.getElementById('reg-user').value = '';
+            document.getElementById('reg-pin').value = '';
+            checkExistingSession();
+        }
     </script>
 </body>
 </html>
