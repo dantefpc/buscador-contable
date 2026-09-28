@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PCGE 2026 - Plan Contable General Empresarial</title>
+    <title>Buscador PCGE 2026 - Plan Contable General Empresarial</title>
     <!-- Tailwind CSS Play CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -20,10 +20,10 @@
         <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8 space-y-6">
             <div class="text-center space-y-2">
                 <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 mb-2 shadow-inner">
-                    <i data-lucide="book-open-check" class="w-8 h-8"></i>
+                    <i data-lucide="search-check" class="w-8 h-8"></i>
                 </div>
-                <h1 class="text-2xl font-bold tracking-tight text-white">PCGE 2026</h1>
-                <p class="text-sm text-slate-400">Plan Contable General Empresarial - Perú</p>
+                <h1 class="text-2xl font-bold tracking-tight text-white">Buscador PCGE 2026</h1>
+                <p class="text-sm text-slate-400">Acceso al Sistema Contable</p>
             </div>
 
             <form id="login-form" class="space-y-4" onsubmit="handleLogin(event)">
@@ -52,13 +52,10 @@
                 </div>
 
                 <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-medium rounded-xl shadow-lg shadow-indigo-600/20 transition-all text-sm flex items-center justify-center space-x-2">
-                    <span>Ingresar al Sistema</span>
+                    <span>Ingresar al Buscador</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </button>
             </form>
-            <div class="text-center text-xs text-slate-500">
-                Homologado con NIIF vigentes al 1 de enero de 2026[span_0](start_span)[span_0](end_span)
-            </div>
         </div>
     </div>
 
@@ -68,18 +65,14 @@
         <header class="h-16 border-b border-slate-800 bg-slate-900/50 backdrop-blur px-6 flex items-center justify-between shrink-0">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
-                    <i data-lucide="layers" class="w-5 h-5"></i>
+                    <i data-lucide="compass" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <h2 class="font-bold text-sm tracking-tight text-white">PCGE 2026 - Catálogo Oficial</h2>
-                    <p class="text-xs text-slate-400">Elementos 1 al 9 y Dinámica Contable</p>
+                    <h2 class="font-bold text-sm tracking-tight text-white">Buscador Inteligente PCGE 2026</h2>
+                    <p class="text-xs text-slate-400">Consulta rápida de Cuentas, Activos, Pasivos y Dinámica</p>
                 </div>
             </div>
             <div class="flex items-center space-x-4">
-                <div class="hidden sm:flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 text-xs text-slate-400">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    <span>Sesión Activa: <strong class="text-slate-200">admin</strong></span>
-                </div>
                 <button onclick="handleLogout()" class="flex items-center space-x-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-colors border border-slate-700">
                     <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
                     <span>Salir</span>
@@ -88,35 +81,33 @@
         </header>
 
         <!-- Workspace Layout -->
-        <div class="flex-1 flex overflow-hidden">
-            <!-- Sidebar Elements Navigation -->
-            <aside class="w-80 border-r border-slate-800 bg-slate-900/30 flex flex-col shrink-0">
-                <div class="p-4 border-b border-slate-800">
+        <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+            <!-- Left Pane: Instant Search & List -->
+            <aside class="w-full md:w-96 border-r border-slate-800 bg-slate-900/30 flex flex-col shrink-0">
+                <div class="p-4 border-b border-slate-800 space-y-3">
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
                             <i data-lucide="search" class="w-4 h-4"></i>
                         </span>
-                        <input type="text" id="search-input" oninput="filterAccounts()" placeholder="Buscar cuenta o descripción..." class="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-600">
+                        <input type="text" id="global-search" oninput="handleSearch()" placeholder="Buscar por número (ej. 10, 40) o nombre..." class="w-full pl-9 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-600 text-white font-medium">
+                    </div>
+                    <!-- Quick Category Pills -->
+                    <div class="flex flex-wrap gap-1.5 pt-1" id="filter-pills">
+                        <button onclick="filterByType('TODOS')" class="px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-indigo-600 text-white transition-colors category-pill" data-type="TODOS">Todos</button>
+                        <button onclick="filterByType('ACTIVO')" class="px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors category-pill" data-type="ACTIVO">Activos (1-3)</button>
+                        <button onclick="filterByType('PASIVO')" class="px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors category-pill" data-type="PASIVO">Pasivos (4)</button>
+                        <button onclick="filterByType('PATRIMONIO')" class="px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors category-pill" data-type="PATRIMONIO">Patrimonio (5)</button>
+                        <button onclick="filterByType('RESULTADOS')" class="px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors category-pill" data-type="RESULTADOS">Resultados (6-9)</button>
                     </div>
                 </div>
-                <div class="flex-1 overflow-y-auto p-3 space-y-1.5" id="elements-list">
+                <div class="flex-1 overflow-y-auto p-3 space-y-1.5" id="accounts-results-list">
                     <!-- Populated dynamically -->
                 </div>
             </aside>
 
-            <!-- Main Content Area -->
-            <main class="flex-1 bg-slate-950 overflow-y-auto p-8" id="main-content">
-                <div class="max-w-4xl mx-auto space-y-6">
-                    <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-8 space-y-4">
-                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-600/10 text-indigo-400 text-xs font-semibold border border-indigo-500/20">
-                            <span>Bienvenido al Sistema</span>
-                        </div>
-                        <h1 class="text-3xl font-bold tracking-tight text-white">Plan Contable General Empresarial 2026</h1>
-                        <p class="text-slate-400 text-sm leading-relaxed">
-                            Seleccione un elemento o cuenta en el panel izquierdo para consultar su descripción detallada, nomenclatura de subcuentas, disposiciones de reconocimiento, medición y su dinámica contable oficial bajo Normas Internacionales de Información Financiera (NIIF).
-                        </p>
-                    </div>
-                </div>
+            <!-- Right Pane: Detailed Account Card -->
+            <main class="flex-1 bg-slate-950 overflow-y-auto p-6 md:p-10" id="detail-main-content">
+                <!-- Loaded dynamically on selection -->
             </main>
         </div>
     </div>
@@ -124,532 +115,82 @@
     <!-- JavaScript Application Logic -->
     <script>
         const pcgeData = [
-            {
-                element: "1",
-                title: "Elemento 1: Activo Disponible y Exigible",
-                desc: "Comprende los fondos en caja y en instituciones financieras, y las cuentas por cobrar.",
-                accounts: [
-                    {
-                        code: "10", name: "EFECTIVO Y EQUIVALENTES AL EFECTIVO",
-                        content: "Agrupa las subcuentas que representan medios de pago como dinero en efectivo, cheques, giros, transferencias electrónicas, así como depósitos en instituciones financieras.",
-                        subs: ["101 Caja", "102 Fondos fijos", "103 Efectivo y cheques en tránsito", "104 Cuentas corrientes en instituciones financieras", "105 Otros equivalentes al efectivo", "106 Depósitos en instituciones financieras", "107 Fondos sujetos a restricción"],
-                        dynamics: "Debitado por entradas de efectivo, depósitos y notas de abono. Acreditado por pagos, transferencias y notas de cargo."
-                    },
-                    {
-                        code: "11", name: "INVERSIONES FINANCIERAS",
-                        content: "Incluye inversiones financieras clasificadas según el modelo de negocio (costo amortizado, valor razonable con cambios en ORI, o valor razonable con cambios en resultados).",
-                        subs: ["111 Inversiones financieras medidas al costo amortizado", "112 Inversiones financieras medidas al valor razonable con cambios en resultados", "113 Inversiones financieras medidas al valor razonable con cambios en otros resultados integrales"],
-                        dynamics: "Debitado por el costo de adquisición y aumentos de valor razonable. Acreditado por la venta, redención o disminución de valor."
-                    },
-                    {
-                        code: "12", name: "CUENTAS POR COBRAR COMERCIALES - TERCEROS",
-                        content: "Derechos de cobro a terceros derivados de la venta de bienes y/o servicios del objeto del negocio.",
-                        subs: ["121 Facturas, boletas y otros comprobantes por cobrar", "122 Anticipos recibidos", "123 Letras por cobrar"],
-                        dynamics: "Debitado por derechos de cobro generados por ventas. Acreditado por cobranzas parciales o totales y canje de documentos."
-                    },
-                    {
-                        code: "13", name: "CUENTAS POR COBRAR COMERCIALES - RELACIONADAS",
-                        content: "Derechos de cobro a entidades relacionadas derivados de transacciones comerciales.",
-                        subs: ["131 Facturas, boletas y otros comprobantes por cobrar", "132 Anticipos recibidos", "133 Letras por cobrar"],
-                        dynamics: "Debitado por ventas a vinculadas. Acreditado por cobros y compensaciones."
-                    },
-                    {
-                        code: "14", name: "CUENTAS POR COBRAR AL PERSONAL, ACCIONISTAS Y DIRECTORES",
-                        content: "Sumas adeudadas por personal, accionistas (o socios) y directores, distintas de operaciones comerciales.",
-                        subs: ["141 Personal", "142 Accionistas (o socios)", "143 Directores", "149 Diversas"],
-                        dynamics: "Debitado por préstamos y adelantos otorgados. Acreditado por pagos y devoluciones."
-                    },
-                    {
-                        code: "15", name: "ACTIVOS DEL CONTRATO Y COSTOS DE CONTRATOS CON CLIENTES",
-                        content: "Derechos y costos relacionados con contratos con clientes conforme a la NIIF 15.",
-                        subs: ["151 Activos del contrato", "152 Costos para obtener contratos", "153 Costos para cumplir con el contrato"],
-                        dynamics: "Debitado por reconocimiento de activos del contrato y costos incurribles. Acreditado por amortización y facturación de la cuenta por cobrar."
-                    },
-                    {
-                        code: "16", name: "CUENTAS POR COBRAR DIVERSAS - TERCEROS",
-                        content: "Derechos de cobro a terceros por transacciones distintas a las del objeto principal del negocio.",
-                        subs: ["161 Préstamos", "162 Reclamaciones a terceros", "163 Intereses, regalías y dividendos", "164 Depósitos otorgados en garantía", "165 Venta de activo inmovilizado", "167 Tributos por acreditar", "169 Otras cuentas por cobrar diversas"],
-                        dynamics: "Debitado por préstamos otorgados, reclamos e impuestos por acreditar. Acreditado por cobranzas y aplicaciones."
-                    },
-                    {
-                        code: "17", name: "CUENTAS POR COBRAR DIVERSAS - RELACIONADAS",
-                        content: "Derechos de cobro a entidades relacionadas por transacciones distintas a ventas comerciales.",
-                        subs: ["171 Préstamos", "173 Intereses, regalías y dividendos", "174 Depósitos otorgados en garantía", "175 Venta de activo inmovilizado", "179 Otras cuentas por cobrar diversas"],
-                        dynamics: "Debitado por préstamos y conceptos diversos a vinculadas. Acreditado por cobros."
-                    },
-                    {
-                        code: "18", name: "SERVICIOS Y OTROS CONTRATADOS POR ANTICIPADO",
-                        content: "Servicios contratados a recibir en el futuro o beneficios que se extienden más allá de un periodo económico.",
-                        subs: ["182 Seguros", "183 Alquileres", "189 Otros gastos contratados por anticipado"],
-                        dynamics: "Debitado por pagos anticipados de servicios. Acreditado por el consumo o devengo del servicio."
-                    },
-                    {
-                        code: "19", name: "DETERIORO POR PÉRDIDA CREDITICIA ESPERADA O INCURRIDA",
-                        content: "Estimaciones acumuladas por pérdida crediticia esperada o incurrida de cuentas por cobrar.",
-                        subs: ["191 Cuentas por cobrar comerciales - Terceros", "192 Cuentas por cobrar comerciales - Relacionadas", "193 Cuentas por cobrar al personal, accionistas y directores", "194 Cuentas por cobrar diversas - Terceros", "195 Cuentas por cobrar diversas - Relacionadas", "196 Activos del contrato"],
-                        dynamics: "Debitado por recuperaciones o bajas de cuentas incobrables. Acreditado por la estimación de pérdida crediticia del periodo."
-                    }
-                ]
-            },
-            {
-                element: "2",
-                title: "Elemento 2: Activo Realizable",
-                desc: "Bienes y servicios acumulados de propiedad de la entidad destinados a la venta o consumo interno.",
-                accounts: [
-                    {
-                        code: "20", name: "MERCADERÍAS",
-                        content: "Bienes adquiridos por la entidad para ser destinados a la venta sin someterlos a proceso de transformación.",
-                        subs: ["201 Mercaderías (Costo / Valor razonable)"],
-                        dynamics: "Debitado por costo de adquisiciones y devoluciones de clientes. Acreditado por costo de ventas y mermas."
-                    },
-                    {
-                        code: "21", name: "PRODUCTOS TERMINADOS",
-                        content: "Bienes fabricados o producidos por la entidad destinados a la venta, así como servicios prestados pendientes de facturación.",
-                        subs: ["211 Productos terminados", "215 Inventario de servicios prestados"],
-                        dynamics: "Debitado por producción concluida y devoluciones. Acreditado por la venta de productos terminados y servicios."
-                    },
-                    {
-                        code: "22", name: "SUBPRODUCTOS, DESECHOS Y DESPERDICIOS",
-                        content: "Productos accesorios obtenidos en la producción y residuos con valor de realización.",
-                        subs: ["221 Subproductos", "222 Desechos y desperdicios"],
-                        dynamics: "Debitado por reconocimiento inicial de subproductos y desechos. Acreditado por venta o baja de los mismos."
-                    },
-                    {
-                        code: "23", name: "PRODUCTOS EN PROCESO",
-                        content: "Bienes que se encuentran en proceso de manufactura o servicios en proceso.",
-                        subs: ["231 Productos en proceso", "235 Inventario de servicios en proceso"],
-                        dynamics: "Debitado por costos aplicados a la producción en proceso. Acreditado por transferencia a productos terminados."
-                    },
-                    {
-                        code: "24", name: "MATERIAS PRIMAS",
-                        content: "Insumos que intervienen directamente en los procesos de fabricación y quedan incorporados en el producto final.",
-                        subs: ["241 Materias primas"],
-                        dynamics: "Debitado por costo de adquisición. Acreditado por consumo en la producción."
-                    },
-                    {
-                        code: "25", name: "MATERIALES AUXILIARES, SUMINISTROS Y REPUESTOS",
-                        content: "Materiales complementarios, suministros de consumo y repuestos para mantenimiento.",
-                        subs: ["251 Materiales auxiliares", "252 Suministros (Combustibles, lubricantes, energía)", "253 Repuestos"],
-                        dynamics: "Debitado por adquisiciones. Acreditado por consumo en operaciones o mantenimiento."
-                    },
-                    {
-                        code: "26", name: "ENVASES Y EMBALAJES",
-                        content: "Bienes complementarios para la presentación y comercialización del producto.",
-                        subs: ["261 Envases", "262 Embalajes"],
-                        dynamics: "Debitado por compras. Acreditado por utilización en la comercialización."
-                    },
-                    {
-                        code: "27", name: "ACTIVOS NO CORRIENTES MANTENIDOS PARA LA VENTA",
-                        content: "Activos cuya recuperación se espera realizar principalmente a través de su venta en lugar de su uso continuado.",
-                        subs: ["271 Propiedades de inversión", "272 Propiedades, planta y equipo", "273 Activos intangibles", "279 Deterioro acumulado"],
-                        dynamics: "Debitado por transferencia desde cuentas de activo inmovilizado. Acreditado por la venta o baja del activo."
-                    },
-                    {
-                        code: "28", name: "INVENTARIOS POR RECIBIR",
-                        content: "Bienes aún no ingresados al almacén por los cuales se ha incurrido en costos de adquisición.",
-                        subs: ["281 Mercaderías", "284 Materias primas", "285 Materiales auxiliares, suministros y repuestos", "286 Envases y embalajes"],
-                        dynamics: "Debitado por el valor de inventarios en tránsito o por recibir. Acreditado por el ingreso físico a almacén."
-                    },
-                    {
-                        code: "29", name: "DESVALORIZACIÓN DE INVENTARIOS",
-                        content: "Estimaciones acumuladas para cubrir la pérdida de valor de los inventarios.",
-                        subs: ["291 Mercaderías", "292 Productos terminados", "293 Subproductos, desechos y desperdicios", "294 Productos en proceso", "295 Materias primas", "296 Materiales auxiliares, suministros y repuestos", "297 Envases y embalajes", "298 Inventarios por recibir"],
-                        dynamics: "Debitado por retiro de inventarios sin valor o reversión de estimación. Acreditado por estimación de desvalorización del periodo."
-                    }
-                ]
-            },
-            {
-                element: "3",
-                title: "Elemento 3: Activo Inmovilizado",
-                desc: "Inversiones financieras a largo plazo, propiedades de inversión, propiedades, planta y equipo, intangibles y activos biológicos.",
-                accounts: [
-                    {
-                        code: "30", name: "INVERSIONES EN SUBSIDIARIAS, ASOCIADAS Y NEGOCIOS CONJUNTOS",
-                        content: "Inversiones en entidades bajo control, influencia significativa o control conjunto.",
-                        subs: ["301 Subsidiarias", "302 Asociadas", "303 Negocios conjuntos"],
-                        dynamics: "Debitado por costo de adquisición y aumento por método de participación. Acreditado por venta o pérdidas patrimoniales."
-                    },
-                    {
-                        code: "31", name: "PROPIEDADES DE INVERSIÓN",
-                        content: "Terrenos o edificaciones mantenidos para obtener rentas o plusvalía.",
-                        subs: ["311 Terrenos", "312 Edificaciones", "313 Construcciones en curso"],
-                        dynamics: "Debitado por costo de adquisición o construcción. Acreditado por venta, retiro o transferencia."
-                    },
-                    {
-                        code: "32", name: "ACTIVOS POR DERECHO DE USO",
-                        content: "Activos adquiridos bajo la modalidad de arrendamiento financiero u operativo importante (NIIF 16).",
-                        subs: ["321 Propiedades de inversión - Arrendamiento financiero", "322 Propiedades, planta y equipo - Arrendamiento financiero"],
-                        dynamics: "Debitado por el reconocimiento inicial del derecho de uso. Acreditado por devolución o transferencia al ejercer opción de compra."
-                    },
-                    {
-                        code: "33", name: "PROPIEDADES, PLANTA Y EQUIPO",
-                        content: "Activos tangibles para uso en producción, suministro de bienes/servicios o fines administrativos por más de un periodo.",
-                        subs: ["330 Planta productora", "331 Terrenos", "332 Edificaciones", "333 Maquinarias y equipos de explotación", "334 Unidades de transporte", "335 Muebles y enseres", "336 Equipos diversos", "337 Piezas de repuesto", "338 Unidades por recibir", "339 Obras en curso"],
-                        dynamics: "Debitado por costo de adquisición, mejora o revaluación. Acreditado por venta, retiro o desapropiación."
-                    },
-                    {
-                        code: "34", name: "ACTIVOS INTANGIBLES",
-                        content: "Activos identificables de carácter no monetario y sin sustancia física (concesiones, software, patentes, criptoactivos, plusvalía).",
-                        subs: ["341 Concesiones, licencias y otros derechos", "342 Patentes y propiedad industrial", "343 Programas de computadora (software)", "344 Costos de exploración y desarrollo", "345 Fórmulas, diseños y prototipos", "347 Plusvalía", "348 Criptoactivos", "349 Otros activos intangibles"],
-                        dynamics: "Debitado por costo de adquisición o desarrollo. Acreditado por venta, retiro o amortización."
-                    },
-                    {
-                        code: "35", name: "ACTIVOS BIOLÓGICOS",
-                        content: "Animales vivos y plantas que forman parte de una actividad agrícola, pecuaria o piscícola.",
-                        subs: ["351 Activos biológicos en producción", "352 Activos biológicos en desarrollo"],
-                        dynamics: "Debitado por costos de desarrollo y valor razonable. Acreditado por venta, cosecha o retiro."
-                    },
-                    {
-                        code: "36", name: "DETERIORO DE ACTIVO INMOVILIZADO",
-                        content: "Estimaciones de pérdida de valor para activos inmovilizados medidos al costo.",
-                        subs: ["361 Deterioro de propiedades de inversión", "363 Deterioro de PPE - Arrendamiento financiero", "364 Deterioro de propiedades, planta y equipo", "365 Deterioro de activos intangibles", "366 Deterioro de activos biológicos", "367 Deterioro de inversiones en subsidiarias, asociadas y negocios conjuntos"],
-                        dynamics: "Debitado por reversión de pérdidas por deterioro. Acreditado por la estimación del deterioro del periodo."
-                    },
-                    {
-                        code: "37", name: "ACTIVO POR IMPUESTO A LAS GANANCIAS DIFERIDO",
-                        content: "Activos generados por diferencias temporarias deducibles y derecho a compensar pérdidas tributarias.",
-                        subs: ["371 Impuesto a las ganancias diferido"],
-                        dynamics: "Debitado por el importe del activo por diferencias temporarias o pérdidas compensables. Acreditado por la reversión del activo diferido."
-                    },
-                    {
-                        code: "38", name: "OTROS ACTIVOS",
-                        content: "Bienes no destinados a la venta ni al desarrollo operativo habitual (obras de arte, bibliotecas, monedas).",
-                        subs: ["381 Bienes de arte y cultura", "382 Diversos"],
-                        dynamics: "Debitado por costo de adquisición. Acreditado por venta o retiro de los bienes."
-                    },
-                    {
-                        code: "39", name: "DEPRECIACIÓN Y AMORTIZACIÓN ACUMULADAS",
-                        content: "Distribución sistemática del importe depreciable/amortizable de un activo a lo largo de su vida útil.",
-                        subs: ["391 Depreciación acumulada de propiedades de inversión", "392 Depreciación acumulada de PI - Arrendamiento financiero", "393 Depreciación acumulada de PPE - Arrendamiento financiero", "395 Depreciación acumulada de propiedades, planta y equipo", "396 Amortización acumulada", "398 Depreciación acumulada - Activos biológicos"],
-                        dynamics: "Debitado por retiro de depreciación de activos vendidos o dados de baja. Acreditado por la depreciación y amortización del periodo."
-                    }
-                ]
-            },
-            {
-                element: "4",
-                title: "Elemento 4: Pasivo",
-                desc: "Obligaciones presentes de la entidad de transferir recursos económicos surgidas de eventos pasados.",
-                accounts: [
-                    {
-                        code: "40", name: "TRIBUTOS, CONTRAPRESTACIONES Y APORTES AL SISTEMA PÚBLICO DE PENSIONES Y DE SALUD POR PAGAR",
-                        content: "Obligaciones por impuestos, contribuciones y tributos a cargo propio o como agente retenedor.",
-                        subs: ["401 Gobierno nacional (IGV, Renta)", "402 Certificados tributarios", "403 Instituciones públicas (ESSALUD, ONP)", "405 Gobiernos regionales", "406 Gobiernos locales (Impuesto predial, arbitrios)", "409 Sanciones y otros costos administrativos"],
-                        dynamics: "Debitado por pagos de obligaciones tributarias y compensaciones. Acreditado por tributos devengados e impuestos retenidos."
-                    },
-                    {
-                        code: "41", name: "REMUNERACIONES Y PARTICIPACIONES POR PAGAR",
-                        content: "Obligaciones devengadas con los trabajadores por remuneraciones, beneficios sociales y participaciones.",
-                        subs: ["411 Remuneraciones por pagar", "413 Participaciones de los trabajadores por pagar", "415 Beneficios sociales (CTS, pensiones)", "417 Administradoras de fondos de pensiones (AFP)", "419 Otras remuneraciones y participaciones por pagar"],
-                        dynamics: "Debitado por pagos efectuados a trabajadores y AFPs. Acreditado por remuneraciones y beneficios devengados."
-                    },
-                    {
-                        code: "42", name: "CUENTAS POR PAGAR COMERCIALES - TERCEROS",
-                        content: "Obligaciones contraídas con proveedores por compra de bienes y servicios del objeto del negocio.",
-                        subs: ["421 Facturas, boletas y otros comprobantes por pagar", "422 Anticipos otorgados (naturaleza deudora)", "423 Letras por pagar", "424 Honorarios por pagar", "425 Acuerdos de financiamiento"],
-                        dynamics: "Debitado por pagos parciales o totales a proveedores. Acreditado por la recepción de bienes y servicios."
-                    },
-                    {
-                        code: "43", name: "CUENTAS POR PAGAR COMERCIALES - RELACIONADAS",
-                        content: "Obligaciones contraídas con entidades relacionadas por compras de bienes y servicios.",
-                        subs: ["431 Facturas, boletas y otros comprobantes por pagar", "432 Anticipos otorgados", "433 Letras por pagar", "434 Honorarios por pagar"],
-                        dynamics: "Debitado por pagos a vinculadas. Acreditado por compras de bienes y servicios a relacionadas."
-                    },
-                    {
-                        code: "44", name: "CUENTAS POR PAGAR A LOS ACCIONISTAS (SOCIOS) Y DIRECTORES",
-                        content: "Sumas adeudadas a accionistas y directores por préstamos, dividendos o dietas.",
-                        subs: ["441 Accionistas (socios, partícipes)", "442 Directores"],
-                        dynamics: "Debitado por pagos y capitalización de préstamos. Acreditado por préstamos recibidos, dividendos y dietas devengadas."
-                    },
-                    {
-                        code: "45", name: "OBLIGACIONES FINANCIERAS",
-                        content: "Obligaciones por operaciones de financiación con instituciones financieras y emisión de instrumentos de deuda.",
-                        subs: ["451 Préstamos de instituciones financieras y otras entidades", "452 Contratos de arrendamiento financiero", "453 Obligaciones emitidas (bonos, papeles comerciales)", "454 Otros instrumentos financieros por pagar", "455 Costos por préstamos por pagar", "456 Préstamos con compromisos de recompra"],
-                        dynamics: "Debitado por pagos de principal de préstamos. Acreditado por obtención de financiamientos y costos devengados."
-                    },
-                    {
-                        code: "46", name: "CUENTAS POR PAGAR DIVERSAS - TERCEROS",
-                        content: "Obligaciones con terceros por transacciones distintas a comerciales, tributarias o financieras.",
-                        subs: ["461 Reclamaciones de terceros", "462 Pasivos por arrendamiento por derecho de uso", "463 Pasivos por reembolsos", "464 Pasivos por instrumentos financieros", "465 Pasivos por compra de activo inmovilizado", "466 Participación de terceros en acuerdos conjuntos", "467 Depósitos recibidos en garantía", "469 Otras cuentas por pagar diversas (subsidios)"],
-                        dynamics: "Debitado por pagos y devoluciones de garantías. Acreditado por reclamaciones, compra de inmovilizados y depósitos recibidos."
-                    },
-                    {
-                        code: "47", name: "CUENTAS POR PAGAR DIVERSAS - RELACIONADAS",
-                        content: "Obligaciones a favor de entidades relacionadas por operaciones diferentes a las comerciales y financieras.",
-                        subs: ["471 Préstamos", "472 Costos por préstamos", "473 Anticipos recibidos", "474 Regalías", "475 Dividendos", "476 Depósitos recibidos en garantía", "477 Pasivo por compra de activo inmovilizado", "479 Otras cuentas por pagar diversas"],
-                        dynamics: "Debitado por pagos efectuados a relacionadas. Acreditado por préstamos recibidos, dividendos o compras de activo inmovilizado."
-                    },
-                    {
-                        code: "48", name: "PROVISIONES",
-                        content: "Valores estimados por obligaciones de monto u oportunidad inciertos (litigios, desmantelamiento, garantías).",
-                        subs: ["481 Provisión para litigios", "482 Provisión por desmantelamiento, retiro o rehabilitación del inmovilizado", "483 Provisión para reestructuraciones", "484 Provisión para protección y remediación del medio ambiente", "485 Provisión para gastos de responsabilidad social", "486 Provisión para garantías", "489 Otras provisiones"],
-                        dynamics: "Debitado por transferencia a pasivos ciertos o reversión de provisiones. Acreditado por estimación de nuevas provisiones."
-                    },
-                    {
-                        code: "49", name: "PASIVO DIFERIDO",
-                        content: "Pasivos por impuestos generados por diferencias temporarias gravables y subsidios recibidos diferidos.",
-                        subs: ["491 Impuesto a las ganancias diferido", "492 Ganancia por venta con arrendamiento posterior", "493 Subsidios recibidos diferidos", "494 Pasivo del contrato"],
-                        dynamics: "Debitado por el reconocimiento en resultados de ingresos diferidos. Acreditado por el registro de diferencias temporarias gravables y subsidios."
-                    }
-                ]
-            },
-            {
-                element: "5",
-                title: "Elemento 5: Patrimonio",
-                desc: "Aportes de accionistas, resultados generados y actualizaciones de valor que modifican el patrimonio neto.",
-                accounts: [
-                    {
-                        code: "50", name: "CAPITAL",
-                        content: "Aportes de accionistas, socios o partícipes formalizados legalmente y acciones en tesorería.",
-                        subs: ["501 Capital social", "502 Acciones en tesorería (naturaleza deudora)"],
-                        dynamics: "Debitado por reducciones de capital y recompra de acciones. Acreditado por capital aportado o capitalización de utilidades."
-                    },
-                    {
-                        code: "51", name: "ACCIONES DE INVERSIÓN",
-                        content: "Acciones sin derecho a voto emitidas conforme a ley que otorgan derechos económicos.",
-                        subs: ["511 Acciones de inversión", "512 Acciones de inversión en tesorería"],
-                        dynamics: "Debitado por redención de acciones de inversión. Acreditado por aumentos de acciones de inversión."
-                    },
-                    {
-                        code: "52", name: "CAPITAL ADICIONAL",
-                        content: "Primas (descuentos) de acciones y aportes en proceso de formalización legal.",
-                        subs: ["521 Primas (descuento) de acciones", "522 Capitalizaciones en trámite", "523 Reducciones de capital pendientes de formalización", "524 Pago basado en acciones"],
-                        dynamics: "Debitado por capitalización parcial o total. Acreditado por primas de emisión y aportes pendientes de formalización."
-                    },
-                    {
-                        code: "56", name: "RESULTADOS NO REALIZADOS",
-                        content: "Ganancias o pérdidas por diferencia de cambio en inversión neta en el extranjero e instrumentos de cobertura.",
-                        subs: ["561 Diferencia de cambio de inversión neta en el extranjero", "562 Instrumentos financieros - Coberturas", "565 Resultado en activos o pasivos financieros - Compra o venta convencional"],
-                        dynamics: "Debitado por pérdidas en coberturas o inversión extranjera. Acreditado por ganancias en coberturas o conversión extranjera."
-                    },
-                    {
-                        code: "57", name: "EXCEDENTE DE REVALUACIÓN",
-                        content: "Variaciones en propiedades, planta y equipo, intangibles y activos mineros objeto de revaluación.",
-                        subs: ["571 Excedente de revaluación (PPE, Intangibles, Impuesto diferido)"],
-                        dynamics: "Debitado por liberación de excedente por depreciación o venta del activo revaluado. Acreditado por el mayor valor en revaluación de activos."
-                    },
-                    {
-                        code: "58", name: "RESERVAS",
-                        content: "Apropiaciones de utilidades autorizadas por ley, estatutos o acuerdos de accionistas.",
-                        subs: ["581 Reinversión", "582 Legal", "583 Contractuales", "584 Estatutarias", "585 Facultativas", "586 Participación en otros cambios patrimoniales de relacionadas", "589 Otras reservas"],
-                        dynamics: "Debitado por capitalización o cobertura de pérdidas. Acreditado por detracciones de utilidades (reserva legal, estatutaria)."
-                    },
-                    {
-                        code: "59", name: "RESULTADOS ACUMULADOS",
-                        content: "Utilidades no distribuidas y pérdidas acumuladas sobre las que no se han tomado decisiones.",
-                        subs: ["591 Utilidades no distribuidas", "592 Pérdidas acumuladas", "593 Efectos de adopción por primera vez de las NIIF"],
-                        dynamics: "Debitado por pérdida del periodo, distribución de dividendos o corrección de errores. Acreditado por utilidad del periodo o aplicación de resultados."
-                    }
-                ]
-            },
-            {
-                element: "6",
-                title: "Elemento 6: Gastos por Naturaleza",
-                desc: "Cuentas de gestión clasificadas por su naturaleza económica que representan consumos de beneficios.",
-                accounts: [
-                    {
-                        code: "60", name: "COMPRAS",
-                        content: "Acumula las compras de bienes destinados a la venta o al proceso productivo.",
-                        subs: ["601 Mercaderías", "602 Materias primas", "603 Materiales auxiliares, suministros y repuestos", "604 Envases y embalajes", "605 Descuentos obtenidos por pronto pago", "606 Descuentos, rebajas y bonificaciones obtenidos", "609 Costos vinculados con las compras"],
-                        dynamics: "Debitado por el importe de las compras de bienes. Acreditado por devolución de compras o cierre del periodo con abono a Valor Agregado."
-                    },
-                    {
-                        code: "61", name: "VARIACIÓN DE INVENTARIOS",
-                        content: "Variaciones en los saldos de inventarios de mercaderías, materias primas, suministros y envases.",
-                        subs: ["611 Mercaderías", "612 Materias primas", "613 Materiales auxiliares, suministros y repuestos", "614 Envases y embalajes"],
-                        dynamics: "Debitado por consumo de materias primas e insumos. Acreditado por incorporación de compras a inventarios al cierre."
-                    },
-                    {
-                        code: "62", name: "GASTOS DE PERSONAL Y DIRECTORES",
-                        content: "Remuneraciones, contribuciones sociales y retribuciones al directorio.",
-                        subs: ["621 Remuneraciones", "622 Otras remuneraciones", "623 Indemnizaciones al personal", "624 Capacitación", "625 Atención al personal", "627 Seguridad, previsión social y otras contribuciones", "628 Retribuciones al directorio", "629 Beneficios sociales de los trabajadores"],
-                        dynamics: "Debitado por el monto bruto de remuneraciones y contribuciones de ley. Acreditado al cierre del periodo con cargo a Excedente Bruto de Explotación."
-                    },
-                    {
-                        code: "63", name: "GASTOS DE SERVICIOS PRESTADOS POR TERCEROS",
-                        content: "Gastos de servicios prestados a la entidad por terceros (transporte, asesoría, alquileres, servicios básicos).",
-                        subs: ["631 Transporte, correos y gastos de viaje", "632 Asesoría y consultoría", "633 Producción encargada a terceros", "634 Mantenimiento y reparaciones", "635 Alquileres", "636 Servicios básicos", "637 Publicidad, publicaciones y relaciones públicas", "638 Servicios de contratistas", "639 Otros servicios prestados por terceros"],
-                        dynamics: "Debitado por el importe de los servicios recibidos. Acreditado al cierre del periodo con cargo a Valor Agregado."
-                    },
-                    {
-                        code: "64", name: "GASTOS POR TRIBUTOS",
-                        content: "Impuestos, tasas y contribuciones a cargo de la entidad y gastos en deuda tributaria.",
-                        subs: ["641 Gobierno nacional", "642 Gobierno regional", "643 Gobierno local", "644 Otros gastos por tributos", "645 Gastos en deuda tributaria (intereses, multas)"],
-                        dynamics: "Debitado por tributos devengados y multas. Acreditado al cierre del periodo con cargo a Excedente Bruto de Explotación."
-                    },
-                    {
-                        code: "65", name: "OTROS GASTOS DE GESTIÓN",
-                        content: "Gastos de gestión distintos de producción o remuneraciones (seguros, regalías, suministros diversos).",
-                        subs: ["650 Gestión medioambiental y responsabilidad social", "651 Seguros", "652 Regalías", "653 Suscripciones", "654 Licencias y derechos de vigencia", "655 Costo neto de enajenación de activos inmovilizados", "656 Suministros", "657 Pérdida por participación en resultados de relacionadas", "658 Diferencia de cambio", "659 Otros gastos de gestión"],
-                        dynamics: "Debitado por primas de seguros, regalías y valor contable de inmovilizados vendidos. Acreditado al cierre con cargo a Resultado de Operación."
-                    },
-                    {
-                        code: "66", name: "PÉRDIDA POR MEDICIÓN DE ACTIVOS NO FINANCIEROS AL VALOR RAZONABLE",
-                        content: "Disminuciones de valor en activos no financieros medidos a valor razonable.",
-                        subs: ["661 Activo realizable", "662 Activo inmovilizado"],
-                        dynamics: "Debitado por la pérdida de valor por medición a valor razonable. Acreditado al cierre con cargo a Resultado de Operación."
-                    },
-                    {
-                        code: "67", name: "GASTOS FINANCIEROS",
-                        content: "Intereses y gastos relacionados exclusivamente con la obtención de financiamiento.",
-                        subs: ["671 Gastos en operaciones de endeudamiento", "672 Pérdida por instrumentos financieros derivados", "673 Intereses por préstamos y otras obligaciones", "674 Gastos en factoring", "676 Diferencia de cambio", "677 Pérdida por medición de activos y pasivos financieros al valor razonable", "679 Otros gastos financieros"],
-                        dynamics: "Debitado por intereses y comisiones financieras devengadas. Acreditado al cierre con cargo al Resultado del Ejercicio."
-                    },
-                    {
-                        code: "68", name: "VALUACIÓN Y DETERIORO DE ACTIVOS Y PROVISIONES",
-                        content: "Consumo de beneficio económico de activos inmovilizados, pérdidas de valor y provisiones.",
-                        subs: ["681 Depreciación de propiedades de inversión", "682 Depreciación de PI y PPE - Arrendamiento financiero", "683 Depreciación de propiedades, planta y equipo", "685 Depreciación de activos biológicos", "686 Amortización de activos intangibles", "687 Valuación de activos (deterioro de cuentas por cobrar)", "688 Deterioro del valor de los activos", "689 Provisiones"],
-                        dynamics: "Debitado por estimación de depreciación, deterioro y provisiones. Acreditado al cierre con cargo a Resultado de Operación."
-                    },
-                    {
-                        code: "69", name: "COSTO DE VENTAS",
-                        content: "Costo de los bienes y/o servicios inherentes al giro del negocio transferidos a título oneroso.",
-                        subs: ["691 Mercaderías", "692 Productos terminados", "693 Servicios prestados", "694 Subproductos, desechos y desperdicios", "695 Gastos por deterioro de inventarios al costo"],
-                        dynamics: "Debitado por el costo de los bienes y servicios vendidos. Acreditado por devoluciones de clientes o transferencia al cierre."
-                    }
-                ]
-            },
-            {
-                element: "7",
-                title: "Elemento 7: Ingresos por Naturaleza",
-                desc: "Ingresos por la explotación de la actividad económica y otros ingresos clasificados por su naturaleza.",
-                accounts: [
-                    {
-                        code: "70", name: "VENTAS",
-                        content: "Ingresos por ventas de bienes y/o servicios inherentes a las operaciones del giro del negocio.",
-                        subs: ["701 Mercaderías", "702 Productos terminados", "703 Servicios prestados", "704 Subproductos, desechos y desperdicios", "706 Descuentos concedidos por pronto pago", "707 Ingresos como agente", "709 Devoluciones sobre ventas"],
-                        dynamics: "Debitado por devoluciones sobre ventas y transferencia al cierre. Acreditado por el importe de las ventas de bienes y servicios."
-                    },
-                    {
-                        code: "71", name: "VARIACIÓN DE LA PRODUCCIÓN ALMACENADA",
-                        content: "Variaciones originadas entre inventarios finales e iniciales de productos en proceso, terminados y servicios.",
-                        subs: ["711 Variación de productos terminados", "712 Variación de subproductos, desechos y desperdicios", "713 Variación de productos en proceso", "714 Variación de envases y embalajes", "715 Variación de inventarios de servicios"],
-                        dynamics: "Debitado por productos en proceso al inicio del periodo. Acreditado por costo de inventarios producidos."
-                    },
-                    {
-                        code: "72", name: "PRODUCCIÓN DE ACTIVO INMOVILIZADO",
-                        content: "Costo incurrido por la entidad en la construcción o producción de activos inmovilizados para uso propio.",
-                        subs: ["721 Propiedades de inversión", "722 Propiedades, planta y equipo", "723 Activos intangibles", "724 Activos biológicos", "725 Costos por préstamos capitalizados"],
-                        dynamics: "Debitado al cierre con abono a Producción del Periodo. Acreditado por el costo incurrido en la construcción de activos fijos."
-                    },
-                    {
-                        code: "75", name: "OTROS INGRESOS DE GESTIÓN",
-                        content: "Ingresos distintos de la actividad principal y de financiamiento (comisiones, regalías, alquileres, recuperación de deterioro).",
-                        subs: ["750 Ganancia por instrumento financiero derivado", "751 Servicios en beneficio del personal", "752 Comisiones y corretajes", "753 Regalías", "754 Alquileres", "755 Recuperación de cuentas de valuación y deterioro", "756 Enajenación de activos inmovilizados", "757 Participación en resultados de relacionadas", "758 Diferencia de cambio", "759 Otros ingresos de gestión (subsidios, reclamos)"],
-                        dynamics: "Debitado al cierre con abono a Resultado de Operación. Acreditado por ingresos diversos no operativos."
-                    },
-                    {
-                        code: "76", name: "GANANCIA POR MEDICIÓN DE ACTIVOS NO FINANCIEROS AL VALOR RAZONABLE",
-                        content: "Incrementos de valor en activos no financieros medidos al valor razonable.",
-                        subs: ["761 Activo realizable", "762 Activo inmovilizado"],
-                        dynamics: "Debitado al cierre con abono a Resultado de Operación. Acreditado por el incremento de valor por medición a valor razonable."
-                    },
-                    {
-                        code: "77", name: "INGRESOS FINANCIEROS",
-                        content: "Rentas o rendimientos por colocación de capitales, dividendos, diferencia de cambio y ganancias financieras.",
-                        subs: ["771 Ganancia por instrumento financiero derivado", "773 Dividendos", "774 Ingresos en factoring", "776 Diferencia de cambio", "777 Ganancia por medición de activos y pasivos financieros a valor razonable", "778 Intereses por préstamos medidos bajo tasa efectiva", "779 Otros ingresos financieros"],
-                        dynamics: "Debitado al cierre con abono a Resultado antes de impuesto. Acreditado por intereses y rendimientos financieros ganados."
-                    },
-                    {
-                        code: "78", name: "CARGAS CUBIERTAS POR PROVISIONES",
-                        content: "Transferencia de gastos incurridos por valuación, deterioro y provisiones a cuentas de costo.",
-                        subs: ["781 Cargas cubiertas por provisiones"],
-                        dynamics: "Debitado al cierre con abono a Resultado de Operación. Acreditado por cargas por provisiones imputables a costos."
-                    },
-                    {
-                        code: "79", name: "CARGAS IMPUTABLES A CUENTAS DE COSTOS Y GASTOS",
-                        content: "Cuenta de enlace para transferir gastos por naturaleza a cuentas de costo de producción o función.",
-                        subs: ["791 Cargas imputables a cuentas de costos y gastos", "792 Gastos financieros imputables a cuentas de inventarios"],
-                        dynamics: "Debitado al cierre con abono a cuentas del Elemento 9. Acreditado por la transferencia de gastos por naturaleza al costo."
-                    }
-                ]
-            },
-            {
-                element: "8",
-                title: "Elemento 8: Saldos Intermediarios de Gestión y Resultado",
-                desc: "Acumulación de saldos intermediarios, determinación del resultado del ejercicio e impuesto a las ganancias.",
-                accounts: [
-                    {
-                        code: "80", name: "MARGEN COMERCIAL",
-                        content: "Ganancia bruta por el servicio de intermediación comercial.",
-                        subs: ["801 Margen comercial"],
-                        dynamics: "Debitado por compras de mercaderías y variación. Acreditado por ventas de mercaderías."
-                    },
-                    {
-                        code: "81", name: "PRODUCCIÓN DEL EJERCICIO",
-                        content: "Valor de lo que la entidad ha producido (vendido, almacenado o inmovilizado).",
-                        subs: ["811 Producción de bienes", "812 Producción de servicios", "813 Producción de activo inmovilizado"],
-                        dynamics: "Debitado por saldos de variación de producción. Acreditado por ventas de productos terminados, servicios y producción inmovilizada."
-                    },
-                    {
-                        code: "82", name: "VALOR AGREGADO",
-                        content: "Creación de valor económico resultante de la producción menos los consumos intermedios.",
-                        subs: ["821 Valor agregado"],
-                        dynamics: "Debitado por consumos intermedios (compras de suministros y servicios). Acreditado por Margen Comercial y Producción del Periodo."
-                    },
-                    {
-                        code: "83", name: "EXCEDENTE BRUTO (INSUFICIENCIA BRUTA) DE EXPLOTACIÓN",
-                        content: "Resultado derivado de la actividad productiva antes de depreciaciones y provisiones.",
-                        subs: ["831 Excedente bruto (insuficiencia bruta) de explotación"],
-                        dynamics: "Debitado por gastos de personal y tributos. Acreditado por Valor Agregado y subsidios recibidos."
-                    },
-                    {
-                        code: "84", name: "RESULTADO DE OPERACIÓN",
-                        content: "Resultado operativo que refleja el desempeño de las actividades ordinarias de la entidad.",
-                        subs: ["841 Resultado de operación"],
-                        dynamics: "Debitado por insuficiencia bruta y gastos de operación. Acreditado por excedente bruto e ingresos operativos."
-                    },
-                    {
-                        code: "85", name: "RESULTADO ANTES DE IMPUESTO A LAS GANANCIAS Y FINANCIAMIENTO",
-                        content: "Subtotal que comprende el resultado operativo más actividades de inversión.",
-                        subs: ["851 Resultado antes de impuestos y financiamiento"],
-                        dynamics: "Debitado por gastos de inversión. Acreditado por Resultado de Operación e ingresos de inversión."
-                    },
-                    {
-                        code: "86", name: "RESULTADO ANTES DE IMPUESTO A LAS GANANCIAS",
-                        content: "Resultado del periodo antes de considerar la carga tributaria corporativa.",
-                        subs: ["861 Resultado antes de impuesto a las ganancias"],
-                        dynamics: "Debitado por gastos de financiamiento. Acreditado por ingresos financieros y resultado previo."
-                    },
-                    {
-                        code: "88", name: "IMPUESTO A LAS GANANCIAS",
-                        content: "Impuesto calculado sobre la renta imponible del periodo (corriente) y componente diferido.",
-                        subs: ["881 Impuesto a las ganancias - Corriente", "882 Impuesto a las ganancias - Diferido", "883 Impuesto a las ganancias - Diferencia de cambio"],
-                        dynamics: "Debitado por el importe del impuesto corriente y gasto por diferido. Acreditado al cierre con abono a Resultado del Ejercicio."
-                    },
-                    {
-                        code: "89", name: "DETERMINACIÓN DEL RESULTADO DEL EJERCICIO",
-                        content: "Resultado neto total obtenido en el periodo económico.",
-                        subs: ["891 Utilidad", "892 Pérdida"],
-                        dynamics: "Debitado por resultado antes de impuesto y saldo de impuesto a las ganancias. Acreditado con abono a Resultados Acumulados."
-                    }
-                ]
-            },
-            {
-                element: "9",
-                title: "Elemento 9: Gastos por Categoría",
-                desc: "Contabilidad analítica de explotación, costos de producción y gastos por función / categoría (NIIF 18).",
-                accounts: [
-                    {
-                        code: "91", name: "GASTOS DE OPERACIÓN",
-                        content: "Gastos relacionados con las actividades ordinarias de la entidad (administración, ventas, investigación).",
-                        subs: ["911 Gastos de administración", "912 Gastos de ventas"],
-                        dynamics: "Debitado por asignación de gastos por función u operación. Acreditado al cierre del periodo con abono a resultados."
-                    },
-                    {
-                        code: "92", name: "GASTOS DE INVERSIÓN",
-                        content: "Gastos procedentes de activos que generan rendimiento de forma individual o independiente.",
-                        subs: ["921 Gastos de propiedades de inversión", "922 Gastos de inversiones financieras"],
-                        dynamics: "Debitado por costos de inversión imputables. Acreditado al cierre del periodo."
-                    },
-                    {
-                        code: "93", name: "GASTOS DE FINANCIAMIENTO",
-                        content: "Gastos y costos relacionados con pasivos derivados de transacciones de financiación.",
-                        subs: ["931 Intereses de préstamos", "932 Costos de emisión de deuda"],
-                        dynamics: "Debitado por asignación de costos financieros. Acreditado al cierre del periodo."
-                    }
-                ]
-            }
+            // Elemento 1
+            { code: "10", name: "EFECTIVO Y EQUIVALENTES AL EFECTIVO", type: "ACTIVO", element: "Elemento 1: Activo Disponible y Exigible", content: "Agrupa las subcuentas que representan medios de pago como dinero en efectivo, cheques, giros, transferencias electrónicas, así como depósitos en instituciones financieras.", subs: ["101 Caja", "102 Fondos fijos", "103 Efectivo y cheques en tránsito", "104 Cuentas corrientes en instituciones financieras", "105 Otros equivalentes al efectivo", "106 Depósitos en instituciones financieras", "107 Fondos sujetos a restricción"], dynamics: "Debitado por entradas de efectivo, depósitos y notas de abono. Acreditado por pagos, transferencias y notas de cargo." },
+            { code: "11", name: "INVERSIONES FINANCIERAS", type: "ACTIVO", element: "Elemento 1: Activo Disponible y Exigible", content: "Incluye inversiones financieras clasificadas según el modelo de negocio (costo amortizado, valor razonable con cambios en ORI, o valor razonable con cambios en resultados).", subs: ["111 Inversiones financieras medidas al costo amortizado", "112 Inversiones financieras medidas al valor razonable con cambios en resultados", "113 Inversiones financieras medidas al valor razonable con cambios en otros resultados integrales"], dynamics: "Debitado por el costo de adquisición y aumentos de valor razonable. Acreditado por la venta, redención o disminución de valor." },
+            { code: "12", name: "CUENTAS POR COBRAR COMERCIALES - TERCEROS", type: "ACTIVO", element: "Elemento 1: Activo Disponible y Exigible", content: "Derechos de cobro a terceros derivados de la venta de bienes y/o servicios del objeto del negocio.", subs: ["121 Facturas, boletas y otros comprobantes por cobrar", "122 Anticipos recibidos", "123 Letras por cobrar"], dynamics: "Debitado por derechos de cobro generados por ventas. Acreditado por cobranzas parciales o totales y canje de documentos." },
+            { code: "13", name: "CUENTAS POR COBRAR COMERCIALES - RELACIONADAS", type: "ACTIVO", element: "Elemento 1: Activo Disponible y Exigible", content: "Derechos de cobro a entidades relacionadas derivados de transacciones comerciales.", subs: ["131 Facturas, boletas y otros comprobantes por cobrar", "132 Anticipos recibidos", "133 Letras por cobrar"], dynamics: "Debitado por ventas a vinculadas. Acreditado por cobros y compensaciones." },
+            { code: "14", name: "CUENTAS POR COBRAR AL PERSONAL, ACCIONISTAS Y DIRECTORES", type: "ACTIVO", element: "Elemento 1: Activo Disponible y Exigible", content: "Sumas adeudadas por personal, accionistas (o socios) y directores, distintas de operaciones comerciales.", subs: ["141 Personal", "142 Accionistas (o socios)", "143 Directores", "149 Diversas"], dynamics: "Debitado por préstamos y adelantos otorgados. Acreditado por pagos y devoluciones." },
+            { code: "15", name: "ACTIVOS DEL CONTRATO Y COSTOS DE CONTRATOS", type: "ACTIVO", element: "Elemento 1: Activo Disponible y Exigible", content: "Derechos y costos relacionados con contratos con clientes conforme a la NIIF 15.", subs: ["151 Activos del contrato", "152 Costos para obtener contratos", "153 Costos para cumplir con el contrato"], dynamics: "Debitado por reconocimiento de activos del contrato y costos incurribles. Acreditado por amortización y facturación de la cuenta por cobrar." },
+            { code: "16", name: "CUENTAS POR COBRAR DIVERSAS - TERCEROS", type: "ACTIVO", element: "Elemento 1: Activo Disponible y Exigible", content: "Derechos de cobro a terceros por transacciones distintas a las del objeto principal del negocio.", subs: ["161 Préstamos", "162 Reclamaciones a terceros", "163 Intereses, regalías y dividendos", "164 Depósitos otorgados en garantía", "165 Venta de activo inmovilizado", "167 Tributos por acreditar", "169 Otras cuentas por cobrar diversas"], dynamics: "Debitado por préstamos otorgados, reclamos e impuestos por acreditar. Acreditado por cobranzas y aplicaciones." },
+            { code: "17", name: "CUENTAS POR COBRAR DIVERSAS - RELACIONADAS", type: "ACTIVO", element: "Elemento 1: Activo Disponible y Exigible", content: "Derechos de cobro a entidades relacionadas por transacciones distintas a ventas comerciales.", subs: ["171 Préstamos", "173 Intereses, regalías y dividendos", "174 Depósitos otorgados en garantía", "175 Venta de activo inmovilizado", "179 Otras cuentas por cobrar diversas"], dynamics: "Debitado por préstamos y conceptos diversos a vinculadas. Acreditado por cobros." },
+            { code: "18", name: "SERVICIOS Y OTROS CONTRATADOS POR ANTICIPADO", type: "ACTIVO", element: "Elemento 1: Activo Disponible y Exigible", content: "Servicios contratados a recibir en el futuro o beneficios que se extienden más allá de un periodo económico.", subs: ["182 Seguros", "183 Alquileres", "189 Otros gastos contratados por anticipado"], dynamics: "Debitado por pagos anticipados de servicios. Acreditado por el consumo o devengo del servicio." },
+            { code: "19", name: "DETERIORO POR PÉRDIDA CREDITICIA ESPERADA", type: "ACTIVO", element: "Elemento 1: Activo Disponible y Exigible", content: "Estimaciones acumuladas por pérdida crediticia esperada o incurrida de cuentas por cobrar.", subs: ["191 Cuentas por cobrar comerciales - Terceros", "192 Cuentas por cobrar comerciales - Relacionadas", "193 Cuentas por cobrar al personal, accionistas y directores", "194 Cuentas por cobrar diversas - Terceros", "195 Cuentas por cobrar diversas - Relacionadas", "196 Activos del contrato"], dynamics: "Debitado por recuperaciones o bajas de cuentas incobrables. Acreditado por la estimación de pérdida crediticia del periodo." },
+
+            // Elemento 2
+            { code: "20", name: "MERCADERÍAS", type: "ACTIVO", element: "Elemento 2: Activo Realizable", content: "Bienes adquiridos por la entidad para ser destinados a la venta sin someterlos a proceso de transformación.", subs: ["201 Mercaderías (Costo / Valor razonable)"], dynamics: "Debitado por costo de adquisiciones y devoluciones de clientes. Acreditado por costo de ventas y mermas." },
+            { code: "21", name: "PRODUCTOS TERMINADOS", type: "ACTIVO", element: "Elemento 2: Activo Realizable", content: "Bienes fabricados o producidos por la entidad destinados a la venta, así como servicios prestados pendientes de facturación.", subs: ["211 Productos terminados", "215 Inventario de servicios prestados"], dynamics: "Debitado por producción concluida y devoluciones. Acreditado por la venta de productos terminados y servicios." },
+            { code: "22", name: "SUBPRODUCTOS, DESECHOS Y DESPERDICIOS", type: "ACTIVO", element: "Elemento 2: Activo Realizable", content: "Productos accesorios obtenidos en la producción y residuos con valor de realización.", subs: ["221 Subproductos", "222 Desechos y desperdicios"], dynamics: "Debitado por reconocimiento inicial de subproductos y desechos. Acreditado por venta o baja de los mismos." },
+            { code: "23", name: "PRODUCTOS EN PROCESO", type: "ACTIVO", element: "Elemento 2: Activo Realizable", content: "Bienes que se encuentran en proceso de manufactura o servicios en proceso.", subs: ["231 Productos en proceso", "235 Inventario de servicios en proceso"], dynamics: "Debitado por costos aplicados a la producción en proceso. Acreditado por transferencia a productos terminados." },
+            { code: "24", name: "MATERIAS PRIMAS", type: "ACTIVO", element: "Elemento 2: Activo Realizable", content: "Insumos que intervienen directamente en los procesos de fabricación y quedan incorporados en el producto final.", subs: ["241 Materias primas"], dynamics: "Debitado por costo de adquisición. Acreditado por consumo en la producción." },
+            { code: "25", name: "MATERIALES AUXILIARES, SUMINISTROS Y REPUESTOS", type: "ACTIVO", element: "Elemento 2: Activo Realizable", content: "Materiales complementarios, suministros de consumo y repuestos para mantenimiento.", subs: ["251 Materiales auxiliares", "252 Suministros (Combustibles, lubricantes, energía)", "253 Repuestos"], dynamics: "Debitado por adquisiciones. Acreditado por consumo en operaciones o mantenimiento." },
+            { code: "26", name: "ENVASES Y EMBALAJES", type: "ACTIVO", element: "Elemento 2: Activo Realizable", content: "Bienes complementarios para la presentación y comercialización del producto.", subs: ["261 Envases", "262 Embalajes"], dynamics: "Debitado por compras. Acreditado por utilización en la comercialización." },
+            { code: "27", name: "ACTIVOS NO CORRIENTES MANTENIDOS PARA LA VENTA", type: "ACTIVO", element: "Elemento 2: Activo Realizable", content: "Activos cuya recuperación se espera realizar principalmente a través de su venta en lugar de su uso continuado.", subs: ["271 Propiedades de inversión", "272 Propiedades, planta y equipo", "273 Activos intangibles", "279 Deterioro acumulado"], dynamics: "Debitado por transferencia desde cuentas de activo inmovilizado. Acreditado por la venta o baja del activo." },
+            { code: "28", name: "INVENTARIOS POR RECIBIR", type: "ACTIVO", element: "Elemento 2: Activo Realizable", content: "Bienes aún no ingresados al almacén por los cuales se ha incurrido en costos de adquisición.", subs: ["281 Mercaderías", "284 Materias primas", "285 Materiales auxiliares, suministros y repuestos", "286 Envases y embalajes"], dynamics: "Debitado por el valor de inventarios en tránsito o por recibir. Acreditado por el ingreso físico a almacén." },
+            { code: "29", name: "DESVALORIZACIÓN DE INVENTARIOS", type: "ACTIVO", element: "Elemento 2: Activo Realizable", content: "Estimaciones acumuladas para cubrir la pérdida de valor de los inventarios.", subs: ["291 Mercaderías", "292 Productos terminados", "293 Subproductos, desechos y desperdicios", "294 Productos en proceso", "295 Materias primas", "296 Materiales auxiliares, suministros y repuestos", "297 Envases y embalajes", "298 Inventarios por recibir"], dynamics: "Debitado por retiro de inventarios sin valor o reversión de estimación. Acreditado por estimación de desvalorización del periodo." },
+
+            // Elemento 3
+            { code: "30", name: "INVERSIONES EN SUBSIDIARIAS, ASOCIADAS Y NEGOCIOS CONJUNTOS", type: "ACTIVO", element: "Elemento 3: Activo Inmovilizado", content: "Inversiones en entidades bajo control, influencia significativa o control conjunto.", subs: ["301 Subsidiarias", "302 Asociadas", "303 Negocios conjuntos"], dynamics: "Debitado por costo de adquisición y aumento por método de participación. Acreditado por venta o pérdidas patrimoniales." },
+            { code: "31", name: "PROPIEDADES DE INVERSIÓN", type: "ACTIVO", element: "Elemento 3: Activo Inmovilizado", content: "Terrenos o edificaciones mantenidos para obtener rentas o plusvalía.", subs: ["311 Terrenos", "312 Edificaciones", "313 Construcciones en curso"], dynamics: "Debitado por costo de adquisición o construcción. Acreditado por venta, retiro o transferencia." },
+            { code: "32", name: "ACTIVOS POR DERECHO DE USO", type: "ACTIVO", element: "Elemento 3: Activo Inmovilizado", content: "Activos adquiridos bajo la modalidad de arrendamiento financiero u operativo importante (NIIF 16).", subs: ["321 Propiedades de inversión - Arrendamiento financiero", "322 Propiedades, planta y equipo - Arrendamiento financiero"], dynamics: "Debitado por el reconocimiento inicial del derecho de uso. Acreditado por devolución o transferencia al ejercer opción de compra." },
+            { code: "33", name: "PROPIEDADES, PLANTA Y EQUIPO", type: "ACTIVO", element: "Elemento 3: Activo Inmovilizado", content: "Activos tangibles para uso en producción, suministro de bienes/servicios o fines administrativos por más de un periodo.", subs: ["330 Planta productora", "331 Terrenos", "332 Edificaciones", "333 Maquinarias y equipos de explotación", "334 Unidades de transporte", "335 Muebles y enseres", "336 Equipos diversos", "337 Piezas de repuesto", "338 Unidades por recibir", "339 Obras en curso"], dynamics: "Debitado por costo de adquisición, mejora o revaluación. Acreditado por venta, retiro o desapropiación." },
+            { code: "34", name: "ACTIVOS INTANGIBLES", type: "ACTIVO", element: "Elemento 3: Activo Inmovilizado", content: "Activos identificables de carácter no monetario y sin sustancia física (concesiones, software, patentes, criptoactivos, plusvalía).", subs: ["341 Concesiones, licencias y otros derechos", "342 Patentes y propiedad industrial", "343 Programas de computadora (software)", "344 Costos de exploración y desarrollo", "345 Fórmulas, diseños y prototipos", "347 Plusvalía", "348 Criptoactivos", "349 Otros activos intangibles"], dynamics: "Debitado por costo de adquisición o desarrollo. Acreditado por venta, retiro o amortización." },
+            { code: "35", name: "ACTIVOS BIOLÓGICOS", type: "ACTIVO", element: "Elemento 3: Activo Inmovilizado", content: "Animales vivos y plantas que forman parte de una actividad agrícola, pecuaria o piscícola.", subs: ["351 Activos biológicos en producción", "352 Activos biológicos en desarrollo"], dynamics: "Debitado por costos de desarrollo y valor razonable. Acreditado por venta, cosecha o retiro." },
+            { code: "36", name: "DETERIORO DE ACTIVO INMOVILIZADO", type: "ACTIVO", element: "Elemento 3: Activo Inmovilizado", content: "Estimaciones de pérdida de valor para activos inmovilizados medidos al costo.", subs: ["361 Deterioro de propiedades de inversión", "363 Deterioro de PPE - Arrendamiento financiero", "364 Deterioro de propiedades, planta y equipo", "365 Deterioro de activos intangibles", "366 Deterioro de activos biológicos", "367 Deterioro de inversiones en subsidiarias, asociadas y negocios conjuntos"], dynamics: "Debitado por reversión de pérdidas por deterioro. Acreditado por la estimación del deterioro del periodo." },
+            { code: "37", name: "ACTIVO POR IMPUESTO A LAS GANANCIAS DIFERIDO", type: "ACTIVO", element: "Elemento 3: Activo Inmovilizado", content: "Activos generados por diferencias temporarias deducibles y derecho a compensar pérdidas tributarias.", subs: ["371 Impuesto a las ganancias diferido"], dynamics: "Debitado por el importe del activo por diferencias temporarias o pérdidas compensables. Acreditado por la reversión del activo diferido." },
+            { code: "38", name: "OTROS ACTIVOS", type: "ACTIVO", element: "Elemento 3: Activo Inmovilizado", content: "Bienes no destinados a la venta ni al desarrollo operativo habitual (obras de arte, bibliotecas, monedas).", subs: ["381 Bienes de arte y cultura", "382 Diversos"], dynamics: "Debitado por costo de adquisición. Acreditado por venta o retiro de los bienes." },
+            { code: "39", name: "DEPRECIACIÓN Y AMORTIZACIÓN ACUMULADAS", type: "ACTIVO", element: "Elemento 3: Activo Inmovilizado", content: "Distribución sistemática del importe depreciable/amortizable de un activo a lo largo de su vida útil.", subs: ["391 Depreciación acumulada de propiedades de inversión", "392 Depreciación acumulada de PI - Arrendamiento financiero", "393 Depreciación acumulada de PPE - Arrendamiento financiero", "395 Depreciación acumulada de propiedades, planta y equipo", "396 Amortización acumulada", "398 Depreciación acumulada - Activos biológicos"], dynamics: "Debitado por retiro de depreciación de activos vendidos o dados de baja. Acreditado por la depreciación y amortización del periodo." },
+
+            // Elemento 4 (Pasivo)
+            { code: "40", name: "TRIBUTOS, CONTRAPRESTACIONES Y APORTES AL SISTEMA PÚBLICO DE PENSIONES Y DE SALUD POR PAGAR", type: "PASIVO", element: "Elemento 4: Pasivo", content: "Obligaciones por impuestos, contribuciones y tributos a cargo propio o como agente retenedor.", subs: ["401 Gobierno nacional (IGV, Renta)", "402 Certificados tributarios", "403 Instituciones públicas (ESSALUD, ONP)", "405 Gobiernos regionales", "406 Gobiernos locales (Impuesto predial, arbitrios)", "409 Sanciones y otros costos administrativos"], dynamics: "Debitado por pagos de obligaciones tributarias y compensaciones. Acreditado por tributos devengados e impuestos retenidos." },
+            { code: "41", name: "REMUNERACIONES Y PARTICIPACIONES POR PAGAR", type: "PASIVO", element: "Elemento 4: Pasivo", content: "Obligaciones devengadas con los trabajadores por remuneraciones, beneficios sociales y participaciones.", subs: ["411 Remuneraciones por pagar", "413 Participaciones de los trabajadores por pagar", "415 Beneficios sociales (CTS, pensiones)", "417 Administradoras de fondos de pensiones (AFP)", "419 Otras remuneraciones y participaciones por pagar"], dynamics: "Debitado por pagos efectuados a trabajadores y AFPs. Acreditado por remuneraciones y beneficios devengados." },
+            { code: "42", name: "CUENTAS POR PAGAR COMERCIALES - TERCEROS", type: "PASIVO", element: "Elemento 4: Pasivo", content: "Obligaciones contraídas con proveedores por compra de bienes y servicios del objeto del negocio.", subs: ["421 Facturas, boletas y otros comprobantes por pagar", "422 Anticipos otorgados (naturaleza deudora)", "423 Letras por pagar", "424 Honorarios por pagar", "425 Acuerdos de financiamiento"], dynamics: "Debitado por pagos parciales o totales a proveedores. Acreditado por la recepción de bienes y servicios." },
+            { code: "43", name: "CUENTAS POR PAGAR COMERCIALES - RELACIONADAS", type: "PASIVO", element: "Elemento 4: Pasivo", content: "Obligaciones contraídas con entidades relacionadas por compras de bienes y servicios.", subs: ["431 Facturas, boletas y otros comprobantes por pagar", "432 Anticipos otorgados", "433 Letras por pagar", "434 Honorarios por pagar"], dynamics: "Debitado por pagos a vinculadas. Acreditado por compras de bienes y servicios a relacionadas." },
+            { code: "44", name: "CUENTAS POR PAGAR A LOS ACCIONISTAS Y DIRECTORES", type: "PASIVO", element: "Elemento 4: Pasivo", content: "Sumas adeudadas a accionistas y directores por préstamos, dividendos o dietas.", subs: ["441 Accionistas (socios, partícipes)", "442 Directores"], dynamics: "Debitado por pagos y capitalización de préstamos. Acreditado por préstamos recibidos, dividendos y dietas devengadas." },
+            { code: "45", name: "OBLIGACIONES FINANCIERAS", type: "PASIVO", element: "Elemento 4: Pasivo", content: "Obligaciones por operaciones de financiación con instituciones financieras y emisión de instrumentos de deuda.", subs: ["451 Préstamos de instituciones financieras y otras entidades", "452 Contratos de arrendamiento financiero", "453 Obligaciones emitidas (bonos, papeles comerciales)", "454 Otros instrumentos financieros por pagar", "455 Costos por préstamos por pagar", "456 Préstamos con compromisos de recompra"], dynamics: "Debitado por pagos de principal de préstamos. Acreditado por obtención de financiamientos y costos devengados." },
+            { code: "46", name: "CUENTAS POR PAGAR DIVERSAS - TERCEROS", type: "PASIVO", element: "Elemento 4: Pasivo", content: "Obligaciones con terceros por transacciones distintas a comerciales, tributarias o financieras.", subs: ["461 Reclamaciones de terceros", "462 Pasivos por arrendamiento por derecho de uso", "463 Pasivos por reembolsos", "464 Pasivos por instrumentos financieros", "465 Pasivos por compra de activo inmovilizado", "466 Participación de terceros en acuerdos conjuntos", "467 Depósitos recibidos en garantía", "469 Otras cuentas por pagar diversas (subsidios)"], dynamics: "Debitado por pagos y devoluciones de garantías. Acreditado por reclamaciones, compra de inmovilizados y depósitos recibidos." },
+            { code: "47", name: "CUENTAS POR PAGAR DIVERSAS - RELACIONADAS", type: "PASIVO", element: "Elemento 4: Pasivo", content: "Obligaciones a favor de entidades relacionadas por operaciones diferentes a las comerciales y financieras.", subs: ["471 Préstamos", "472 Costos por préstamos", "473 Anticipos recibidos", "474 Regalías", "475 Dividendos", "476 Depósitos recibidos en garantía", "477 Pasivo por compra de activo inmovilizado", "479 Otras cuentas por pagar diversas"], dynamics: "Debitado por pagos efectuados a relacionadas. Acreditado por préstamos recibidos, dividendos o compras de activo inmovilizado." },
+            { code: "48", name: "PROVISIONES", type: "PASIVO", element: "Elemento 4: Pasivo", content: "Valores estimados por obligaciones de monto u oportunidad inciertos (litigios, desmantelamiento, garantías).", subs: ["481 Provisión para litigios", "482 Provisión por desmantelamiento, retiro o rehabilitación del inmovilizado", "483 Provisión para reestructuraciones", "484 Provisión para protección y remediación del medio ambiente", "485 Provisión para gastos de responsabilidad social", "486 Provisión para garantías", "489 Otras provisiones"], dynamics: "Debitado por transferencia a pasivos ciertos o reversión de provisiones. Acreditado por estimación de nuevas provisiones." },
+            { code: "49", name: "PASIVO DIFERIDO", type: "PASIVO", element: "Elemento 4: Pasivo", content: "Pasivos por impuestos generados por diferencias temporarias gravables y subsidios recibidos diferidos.", subs: ["491 Impuesto a las ganancias diferido", "492 Ganancia por venta con arrendamiento posterior", "493 Subsidios recibidos diferidos", "494 Pasivo del contrato"], dynamics: "Debitado por el reconocimiento en resultados de ingresos diferidos. Acreditado por el registro de diferencias temporarias gravables y subsidios." },
+
+            // Elemento 5 (Patrimonio)
+            { code: "50", name: "CAPITAL", type: "PATRIMONIO", element: "Elemento 5: Patrimonio", content: "Aportes de accionistas, socios o partícipes formalizados legalmente y acciones en tesorería.", subs: ["501 Capital social", "502 Acciones en tesorería (naturaleza deudora)"], dynamics: "Debitado por reducciones de capital y recompra de acciones. Acreditado por capital aportado o capitalización de utilidades." },
+            { code: "51", name: "ACCIONES DE INVERSIÓN", type: "PATRIMONIO", element: "Elemento 5: Patrimonio", content: "Acciones sin derecho a voto emitidas conforme a ley que otorgan derechos económicos.", subs: ["511 Acciones de inversión", "512 Acciones de inversión en tesorería"], dynamics: "Debitado por redención de acciones de inversión. Acreditado por aumentos de acciones de inversión." },
+            { code: "52", name: "CAPITAL ADICIONAL", type: "PATRIMONIO", element: "Elemento 5: Patrimonio", content: "Primas (descuentos) de acciones y aportes en proceso de formalización legal.", subs: ["521 Primas (descuento) de acciones", "522 Capitalizaciones en trámite", "523 Reducciones de capital pendientes de formalización", "524 Pago basado en acciones"], dynamics: "Debitado por capitalización parcial o total. Acreditado por primas de emisión y aportes pendientes de formalización." },
+            { code: "56", name: "RESULTADOS NO REALIZADOS", type: "PATRIMONIO", element: "Elemento 5: Patrimonio", content: "Ganancias o pérdidas por diferencia de cambio en inversión neta en el extranjero e instrumentos de cobertura.", subs: ["561 Diferencia de cambio de inversión neta en el extranjero", "562 Instrumentos financieros - Coberturas", "565 Resultado en activos o pasivos financieros - Compra o venta convencional"], dynamics: "Debitado por pérdidas en coberturas o inversión extranjera. Acreditado por ganancias en coberturas o conversión extranjera." },
+            { code: "57", name: "EXCEDENTE DE REVALUACIÓN", type: "PATRIMONIO", element: "Elemento 5: Patrimonio", content: "Variaciones en propiedades, planta y equipo, intangibles y activos mineros objeto de revaluación.", subs: ["571 Excedente de revaluación (PPE, Intangibles, Impuesto diferido)"], dynamics: "Debitado por liberación de excedente por depreciación o venta del activo revaluado. Acreditado por el mayor valor en revaluación de activos." },
+            { code: "58", name: "RESERVAS", type: "PATRIMONIO", element: "Elemento 5: Patrimonio", content: "Apropiaciones de utilidades autorizadas por ley, estatutos o acuerdos de accionistas.", subs: ["581 Reinversión", "582 Legal", "583 Contractuales", "584 Estatutarias", "585 Facultativas", "586 Participación en otros cambios patrimoniales de relacionadas", "589 Otras reservas"], dynamics: "Debitado por capitalización o cobertura de pérdidas. Acreditado por detracciones de utilidades (reserva legal, estatutaria)." },
+            { code: "59", name: "RESULTADOS ACUMULADOS", type: "PATRIMONIO", element: "Elemento 5: Patrimonio", content: "Utilidades no distribuidas y pérdidas acumuladas sobre las que no se han tomado decisiones.", subs: ["591 Utilidades no distribuidas", "592 Pérdidas acumuladas", "593 Efectos de adopción por primera vez de las NIIF"], dynamics: "Debitado por pérdida del periodo, distribución de dividendos o corrección de errores. Acreditado por utilidad del periodo o aplicación de resultados." },
+
+            // Elementos 6 al 9 (Resultados / Gastos / Ingresos)
+            { code: "60", name: "COMPRAS", type: "RESULTADOS", element: "Elemento 6: Gastos por Naturaleza", content: "Acumula las compras de bienes destinados a la venta o al proceso productivo.", subs: ["601 Mercaderías", "602 Materias primas", "603 Materiales auxiliares, suministros y repuestos", "604 Envases y embalajes", "605 Descuentos obtenidos por pronto pago", "606 Descuentos y bonificaciones obtenidos", "609 Costos vinculados con las compras"], dynamics: "Debitado por compras de bienes. Acreditado por devolución o cierre del periodo." },
+            { code: "61", name: "VARIACIÓN DE INVENTARIOS", type: "RESULTADOS", element: "Elemento 6: Gastos por Naturaleza", content: "Variaciones en los saldos de inventarios de mercaderías, materias primas, suministros y envases.", subs: ["611 Mercaderías", "612 Materias primas", "613 Materiales auxiliares, suministros y repuestos", "614 Envases y embalajes"], dynamics: "Debitado por consumo de materias primas. Acreditado por incorporación de compras a inventarios." },
+            { code: "62", name: "GASTOS DE PERSONAL Y DIRECTORES", type: "RESULTADOS", element: "Elemento 6: Gastos por Naturaleza", content: "Remuneraciones, contribuciones sociales y retribuciones al directorio.", subs: ["621 Remuneraciones", "622 Otras remuneraciones", "623 Indemnizaciones", "624 Capacitación", "625 Atención al personal", "627 Seguridad y previsión social", "628 Retribuciones al directorio", "629 Beneficios sociales"], dynamics: "Debitado por remuneraciones y contribuciones de ley. Acreditado al cierre del periodo." },
+            { code: "63", name: "GASTOS DE SERVICIOS PRESTADOS POR TERCEROS", type: "RESULTADOS", element: "Elemento 6: Gastos por Naturaleza", content: "Gastos de servicios prestados a la entidad por terceros (transporte, asesoría, alquileres, básicos).", subs: ["631 Transporte y gastos de viaje", "632 Asesoría y consultoría", "633 Producción encargada a terceros", "634 Mantenimiento y reparaciones", "635 Alquileres", "636 Servicios básicos", "637 Publicidad y relaciones públicas", "638 Servicios de contratistas", "639 Otros servicios de terceros"], dynamics: "Debitado por servicios recibidos. Acreditado al cierre del periodo." },
+            { code: "64", name: "GASTOS POR TRIBUTOS", type: "RESULTADOS", element: "Elemento 6: Gastos por Naturaleza", content: "Impuestos, tasas y contribuciones a cargo de la entidad y gastos en deuda tributaria.", subs: ["641 Gobierno nacional", "642 Gobierno regional", "643 Gobierno local", "644 Otros gastos por tributos", "645 Gastos en deuda tributaria"], dynamics: "Debitado por tributos devengados y multas. Acreditado al cierre del periodo." },
+            { code: "65", name: "OTROS GASTOS DE GESTIÓN", type: "RESULTADOS", element: "Elemento 6: Gastos por Naturaleza", content: "Gastos de gestión distintos de producción o remuneraciones (seguros, regalías, suministros).", subs: ["650 Gestión medioambiental", "651 Seguros", "652 Regalías", "653 Suscripciones", "654 Licencias", "655 Costo neto de enajenación de activos", "656 Suministros", "658 Diferencia de cambio", "659 Otros gastos de gestión"], dynamics: "Debitado por primas de seguros y valor contable de inmovilizados vendidos. Acreditado al cierre." },
+            { code: "66", name: "PÉRDIDA POR MEDICIÓN DE ACTIVOS AL VALOR RAZONABLE", type: "RESULTADOS", element: "Elemento 6: Gastos por Naturaleza", content: "Disminuciones de valor en activos no financieros medidos a valor razonable.", subs: ["661 Activo realizable", "662 Activo inmovilizado"], dynamics: "Debitado por pérdida de valor por medición a valor razonable. Acreditado al cierre." },
+            { code: "67", name: "GASTOS FINANCIEROS", type: "RESULTADOS", element: "Elemento 6: Gastos por Naturaleza", content: "Intereses y gastos relacionados exclusivamente con la obtención de financiamiento.", subs: ["671 Gastos en endeudamiento", "672 Pérdida por derivados", "673 Intereses por préstamos y obligaciones", "674 Gastos en factoring", "676 Diferencia de cambio", "677 Pérdida por medición de activos/pasivos financieros a valor razonable", "679 Otros gastos financieros"], dynamics: "Debitado por intereses y comisiones financieras. Acreditado al cierre." },
+            { code: "68", name: "VALUACIÓN Y DETERIORO DE ACTIVOS Y PROVISIONES", type: "RESULTADOS", element: "Elemento 6: Gastos por Naturaleza", content: "Consumo de beneficio económico de activos inmovilizados, pérdidas de valor y provisiones.", subs: ["681 Depreciación de propiedades de inversión", "683 Depreciación de PPE", "686 Amortización de intangibles", "687 Valuación de activos", "688 Deterioro del valor de activos", "689 Provisiones"], dynamics: "Debitado por estimación de depreciación, deterioro y provisiones. Acreditado al cierre." },
+            { code: "69", name: "COSTO DE VENTAS", type: "RESULTADOS", element: "Elemento 6: Gastos por Naturaleza", content: "Costo de los bienes y/o servicios inherentes al giro del negocio transferidos a título oneroso.", subs: ["691 Mercaderías", "692 Productos terminados", "693 Servicios prestados", "694 Subproductos y desechos", "695 Gastos por deterioro de inventarios"], dynamics: "Debitado por el costo de bienes y servicios vendidos. Acreditado por devoluciones o cierre." },
+            { code: "70", name: "VENTAS", type: "RESULTADOS", element: "Elemento 7: Ingresos por Naturaleza", content: "Ingresos por ventas de bienes y/o servicios inherentes a las operaciones del giro del negocio.", subs: ["701 Mercaderías", "702 Productos terminados", "703 Servicios prestados", "706 Descuentos concedidos", "707 Ingresos como agente", "709 Devoluciones sobre ventas"], dynamics: "Debitado por devoluciones sobre ventas. Acreditado por el importe de las ventas." },
+            { code: "75", name: "OTROS INGRESOS DE GESTIÓN", type: "RESULTADOS", element: "Elemento 7: Ingresos por Naturaleza", content: "Ingresos distintos de la actividad principal (comisiones, regalías, alquileres).", subs: ["751 Servicios en beneficio del personal", "752 Comisiones y corretajes", "753 Regalías", "754 Alquileres", "755 Recuperación de deterioro", "756 Enajenación de activos inmovilizados", "758 Diferencia de cambio", "759 Otros ingresos de gestión"], dynamics: "Debitado al cierre. Acreditado por ingresos diversos no operativos." },
+            { code: "77", name: "INGRESOS FINANCIEROS", type: "RESULTADOS", element: "Elemento 7: Ingresos por Naturaleza", content: "Rentas o rendimientos por colocación de capitales, dividendos y diferencia de cambio.", subs: ["771 Ganancia por derivados", "773 Dividendos", "776 Diferencia de cambio", "777 Ganancia por medición a valor razonable", "778 Intereses por préstamos bajo tasa efectiva", "779 Otros ingresos financieros"], dynamics: "Debitado al cierre. Acreditado por intereses y rendimientos financieros ganados." },
+            { code: "88", name: "IMPUESTO A LAS GANANCIAS", type: "RESULTADOS", element: "Elemento 8: Resultados", content: "Impuesto calculado sobre la renta imponible del periodo (corriente) y componente diferido.", subs: ["881 Impuesto a las ganancias - Corriente", "882 Impuesto a las ganancias - Diferido"], dynamics: "Debitado por impuesto corriente y gasto diferido. Acreditado al cierre." },
+            { code: "91", name: "GASTOS DE OPERACIÓN", type: "RESULTADOS", element: "Elemento 9: Gastos por Categoría", content: "Gastos relacionados con las actividades ordinarias de la entidad (administración, ventas).", subs: ["911 Gastos de administración", "912 Gastos de ventas"], dynamics: "Debitado por asignación de gastos por función. Acreditado al cierre." }
         ];
+
+        let activeFilter = 'TODOS';
 
         // Authentication Handler
         function handleLogin(event) {
@@ -677,7 +218,6 @@
             document.getElementById('login-error').classList.add('hidden');
         }
 
-        // Check persistent login on load
         window.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('pcge_logged') === 'true') {
                 document.getElementById('login-screen').classList.add('hidden');
@@ -687,97 +227,121 @@
             lucide.createIcons();
         });
 
-        // Initialize App View
         function initApp() {
-            renderSidebar();
-            renderAccountDetail(pcgeData[0].accounts[0]);
+            renderAccountsList(pcgeData);
+            renderDetail(pcgeData[0]);
             lucide.createIcons();
         }
 
-        // Render Sidebar Navigation
-        function renderSidebar(filter = '') {
-            const container = document.getElementById('elements-list');
+        function filterByType(type) {
+            activeFilter = type;
+            // Update active pill styling
+            document.querySelectorAll('.category-pill').forEach(pill => {
+                if (pill.getAttribute('data-type') === type) {
+                    pill.className = "px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-indigo-600 text-white transition-colors category-pill";
+                } else {
+                    pill.className = "px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors category-pill";
+                }
+            });
+            handleSearch();
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('global-search').value.toLowerCase().trim();
+            
+            const filtered = pcgeData.filter(acc => {
+                const matchesType = activeFilter === 'TODOS' || acc.type === activeFilter;
+                const matchesQuery = acc.code.toLowerCase().includes(query) || 
+                                     acc.name.toLowerCase().includes(query) || 
+                                     acc.content.toLowerCase().includes(query);
+                return matchesType && matchesQuery;
+            });
+
+            renderAccountsList(filtered);
+        }
+
+        function renderAccountsList(list) {
+            const container = document.getElementById('accounts-results-list');
             container.innerHTML = '';
 
-            pcgeData.forEach(elem => {
-                const filteredAccounts = elem.accounts.filter(acc => 
-                    acc.code.toLowerCase().includes(filter.toLowerCase()) ||
-                    acc.name.toLowerCase().includes(filter.toLowerCase()) ||
-                    acc.content.toLowerCase().includes(filter.toLowerCase())
-                );
+            if (list.length === 0) {
+                container.innerHTML = `<div class="p-4 text-center text-xs text-slate-500">No se encontraron cuentas con ese criterio.</div>`;
+                return;
+            }
 
-                if (filteredAccounts.length > 0) {
-                    const elemDiv = document.createElement('div');
-                    elemDiv.className = 'space-y-1';
-                    
-                    const elemHeader = document.createElement('div');
-                    elemHeader.className = 'px-3 py-2 text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-950/20 rounded-lg border border-indigo-900/30';
-                    elemHeader.textContent = elem.title;
-                    elemDiv.appendChild(elemHeader);
+            list.forEach(acc => {
+                let badgeColor = 'bg-slate-800 text-slate-300 border-slate-700';
+                if (acc.type === 'ACTIVO') badgeColor = 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50';
+                if (acc.type === 'PASIVO') badgeColor = 'bg-rose-950/60 text-rose-400 border-rose-800/50';
+                if (acc.type === 'PATRIMONIO') badgeColor = 'bg-amber-950/60 text-amber-400 border-amber-800/50';
+                if (acc.type === 'RESULTADOS') badgeColor = 'bg-indigo-950/60 text-indigo-400 border-indigo-800/50';
 
-                    const accountsList = document.createElement('div');
-                    accountsList.className = 'pl-2 space-y-1';
-
-                    filteredAccounts.forEach(acc => {
-                        const btn = document.createElement('button');
-                        btn.className = 'w-full text-left px-3 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white transition-all flex items-center justify-between group';
-                        btn.innerHTML = `
-                            <span class="truncate"><strong class="text-indigo-400 font-mono mr-1.5">${acc.code}</strong> ${acc.name}</span>
-                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-600 group-hover:text-slate-400 shrink-0 ml-2"></i>
-                        `;
-                        btn.onclick = () => renderAccountDetail(acc);
-                        accountsList.appendChild(btn);
-                    });
-
-                    elemDiv.appendChild(accountsList);
-                    container.appendChild(elemDiv);
-                }
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-3 rounded-xl bg-slate-900/60 hover:bg-slate-800 border border-slate-800/80 transition-all flex items-center justify-between group cursor-pointer';
+                btn.onclick = () => renderDetail(acc);
+                btn.innerHTML = `
+                    <div class="space-y-1 pr-2 truncate">
+                        <div class="flex items-center space-x-2">
+                            <span class="font-mono font-bold text-sm text-indigo-400">${acc.code}</span>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border ${badgeColor}">${acc.type}</span>
+                        </div>
+                        <p class="text-xs font-medium text-slate-200 truncate">${acc.name}</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-600 group-hover:text-slate-300 shrink-0"></i>
+                `;
+                container.appendChild(btn);
             });
             lucide.createIcons();
         }
 
-        function filterAccounts() {
-            const query = document.getElementById('search-input').value;
-            renderSidebar(query);
-        }
+        function renderDetail(acc) {
+            let badgeColor = 'bg-slate-800 text-slate-300 border-slate-700';
+            let badgeIcon = 'layers';
+            if (acc.type === 'ACTIVO') { badgeColor = 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50'; badgeIcon = 'arrow-up-right'; }
+            if (acc.type === 'PASIVO') { badgeColor = 'bg-rose-950/60 text-rose-400 border-rose-800/50'; badgeIcon = 'arrow-down-left'; }
+            if (acc.type === 'PATRIMONIO') { badgeColor = 'bg-amber-950/60 text-amber-400 border-amber-800/50'; badgeIcon = 'shield'; }
+            if (acc.type === 'RESULTADOS') { badgeColor = 'bg-indigo-950/60 text-indigo-400 border-indigo-800/50'; badgeIcon = 'bar-chart-3'; }
 
-        // Render Account Details in Main Area
-        function renderAccountDetail(acc) {
-            const main = document.getElementById('main-content');
+            const main = document.getElementById('detail-main-content');
             main.innerHTML = `
-                <div class="max-w-4xl mx-auto space-y-6 pb-12 animate-fadeIn">
-                    <!-- Header Card -->
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 space-y-4 shadow-xl">
-                        <div class="flex items-center space-x-3">
-                            <span class="px-3 py-1 bg-indigo-600 text-white font-mono font-bold text-sm rounded-xl shadow-md shadow-indigo-600/30">${acc.code}</span>
-                            <h1 class="text-2xl font-bold tracking-tight text-white">${acc.name}</h1>
+                <div class="max-w-3xl mx-auto space-y-6 pb-12 animate-fadeIn">
+                    <!-- Title & Type Card -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-4 shadow-xl">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="px-3.5 py-1.5 bg-indigo-600 text-white font-mono font-bold text-base rounded-xl shadow-md shadow-indigo-600/30">${acc.code}</span>
+                            <span class="inline-flex items-center space-x-1.5 text-xs font-bold px-3 py-1 rounded-full border ${badgeColor}">
+                                <i data-lucide="${badgeIcon}" class="w-3.5 h-3.5"></i>
+                                <span>${acc.type}</span>
+                            </span>
                         </div>
-                        <p class="text-slate-300 text-sm leading-relaxed">${acc.content}</p>
+                        <h1 class="text-xl md:text-2xl font-bold tracking-tight text-white">${acc.name}</h1>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-indigo-400">${acc.element}</p>
+                        <p class="text-slate-300 text-sm leading-relaxed pt-2">${acc.content}</p>
                     </div>
 
-                    <!-- Subcuentas Grid / List -->
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 space-y-4 shadow-xl">
-                        <h3 class="text-sm font-semibold uppercase tracking-wider text-indigo-400 flex items-center space-x-2">
+                    <!-- Subcuentas -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-4 shadow-xl">
+                        <h3 class="text-xs font-semibold uppercase tracking-wider text-indigo-400 flex items-center space-x-2">
                             <i data-lucide="list-tree" class="w-4 h-4"></i>
-                            <span>Nomenclatura de Subcuentas</span>
+                            <span>Desglose de Subcuentas</span>
                         </h3>
-                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                        <ul class="grid grid-cols-1 gap-2">
                             ${acc.subs.map(sub => `
-                                <li class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3 text-xs text-slate-200 flex items-center space-x-2">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
-                                    <span>${sub}</span>
+                                <li class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3 text-xs text-slate-200 flex items-center space-x-2.5">
+                                    <span class="w-2 h-2 rounded-full bg-indigo-500 shrink-0"></span>
+                                    <span class="font-medium">${sub}</span>
                                 </li>
                             `).join('')}
                         </ul>
                     </div>
 
-                    <!-- Dinámica Contable Card -->
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 space-y-4 shadow-xl">
-                        <h3 class="text-sm font-semibold uppercase tracking-wider text-emerald-400 flex items-center space-x-2">
+                    <!-- Dinámica Contable -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-4 shadow-xl">
+                        <h3 class="text-xs font-semibold uppercase tracking-wider text-emerald-400 flex items-center space-x-2">
                             <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
-                            <span>Dinámica de la Cuenta</span>
+                            <span>Dinámica Contable (Débitos y Créditos)</span>
                         </h3>
-                        <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-5 text-xs text-slate-300 leading-relaxed">
+                        <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-4 text-xs text-slate-300 leading-relaxed font-mono">
                             ${acc.dynamics}
                         </div>
                     </div>
